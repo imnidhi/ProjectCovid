@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,14 +30,10 @@ class Store with ChangeNotifier {
   Future<void> getCountryData() async {
     Map<String, String> countryDataForThirtyDays = {};
     print("QUERY 2");
-    int i = 0;
     for (var country in countries) {
-      print(i);
-      i++;
       http.Response response = await http.get(
           "https://api.covid19api.com/country/${country['Slug']}?from=${thirtydaysago}T00:00:00Z&to=${todaysDate}T00:00:00Z");
       try {
-        print(response.body);
         countryDataForThirtyDays[country['Country']] = response.body;
       } catch (Exception) {
         continue;
