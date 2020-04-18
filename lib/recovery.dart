@@ -22,16 +22,17 @@ class _RecoveryState extends State<Recovery> {
                   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3),
                   itemBuilder: (BuildContext context, int index) {
+                  var keys = store.countryDataList.keys.toList();
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         child: Stack(
                           children: <Widget>[
-                            // Flags.getFullFlag(
-                            //     "${store.countryDataList[index]}", 300, 200),
+                            Flags.getFullFlag(
+                               "${store.countries[index]['ISO2']}", 300, 200),
                             Center(
                                 child: Text(
-                                    "${store.countryDataList[index]}")),
+                                    "${keys[index]}")),
                           ],
                         ),
                         color: Colors.green[100],

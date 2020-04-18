@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,13 +8,44 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'CountryData.dart';
 
 class Store with ChangeNotifier {
+  static DateTime today = new DateTime.now();
+  static DateTime daysAgo = today.subtract(new Duration(days: 15));
+  var todaysDate = new DateFormat("yyyy-MM-dd").format(today);
+  var thirtydaysago = new DateFormat("yyyy-MM-dd").format(daysAgo);
+  Map<String, CountryDataList> countryDataList = {};
   List recoveries = [];
   List casualties = [];
   List countries = [
     {"Country": "Switzerland", "Slug": "switzerland", "ISO2": "CH"},
-    // {"Country": "India", "Slug": "india", "ISO2": "IN"},
+    {"Country": "India", "Slug": "india", "ISO2": "IN"},
   ];
-  Map<String, CountryDataList> countryDataList={};
+
+  
+  // Future<List> getCountries() async {
+  //   http.Response response =
+  //       await http.get("https://api.covid19api.com/countries");
+  //   countries = json.decode(response.body);
+  //   return countries;
+  // }
+
+  Future<void> getCountryData() async {
+    Map<String, String> countryDataForThirtyDays = {};
+    print("QUERY 2");
+    int i = 0;
+    for (var country in countries) {
+      print(i);
+      i++;
+      http.Response response = await http.get(
+          "https://api.covid19api.com/country/${country['Slug']}?from=${thirtydaysago}T00:00:00Z&to=${todaysDate}T00:00:00Z");
+      try {
+        print(response.body);
+        countryDataForThirtyDays[country['Country']] = response.body;
+      } catch (Exception) {
+        continue;
+      }
+    }
+    setCountryData('Country', json.encode(countryDataForThirtyDays));
+  }
 
   void setCountryData(String countryName, String countryDataMap) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -33,8 +65,6 @@ class Store with ChangeNotifier {
       countryData[country] = CountryDataList.fromJson(jsonDecode(jsonList));
     });
     countryDataList = countryData;
-    print(countryData);
-    print(countryDataList);
     notifyListeners();
   }
 }
