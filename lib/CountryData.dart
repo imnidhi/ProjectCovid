@@ -5,8 +5,10 @@ class CountryData {
   String countryCode;
   String lat;
   String lon;
-  int cases;
-  String status;
+  int confirmed;
+  int deaths;
+  int recovered;
+  int active;
   String date;
   double rateOfRecovery;
   double rateOfDeath;
@@ -15,8 +17,10 @@ class CountryData {
       this.countryCode,
       this.lat,
       this.lon,
-      this.cases,
-      this.status,
+      this.confirmed,
+      this.deaths,
+      this.recovered,
+      this.active,
       this.date});
 
   factory CountryData.fromJson(Map<String, dynamic> json) {
@@ -25,8 +29,11 @@ class CountryData {
         countryCode: json['CountryCode'],
         lat: json['Lat'],
         lon: json['Lon'],
-        cases: json['Cases'],
-        status: json['Status'],
+        confirmed: json['Confirmed'],
+        deaths: json['Deaths'],
+        recovered: json['Recovered'],
+        active: json['Active'],
+    
         date: json['Date']);
   }
 }

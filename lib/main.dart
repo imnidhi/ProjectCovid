@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
       print(i);
       i++;
       http.Response response = await http.get(
-          "https://api.covid19api.com/total/country/${country['Slug']}/status/confirmed?from=${thirtydaysago}T00:00:00Z&to=${todaysDate}T00:00:00Z");
+          "https://api.covid19api.com/country/${country['Slug']}?from=${thirtydaysago}T00:00:00Z&to=${todaysDate}T00:00:00Z");
       try {
         print(response.body);
         countryDataForThirtyDays[country['Country']] = response.body;
