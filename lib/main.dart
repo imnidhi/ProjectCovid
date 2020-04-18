@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:project_covid/CountryData.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Store.dart';
 import 'casualties.dart';
 import 'recovery.dart';
@@ -61,8 +62,9 @@ class _MyHomePageState extends State<MyHomePage> {
   //   countries = json.decode(response.body);
   //   return countries;
   // }
-
+   
   Future<Map<String, CountryDataList>> getCountryData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, CountryDataList> countryDataForThirtyDays = {};
     print("QUERY 2");
     int i=0;
@@ -73,8 +75,9 @@ class _MyHomePageState extends State<MyHomePage> {
           "https://api.covid19api.com/country/${country['Country']}?from=${thirtydaysago}T00:00:00Z&to=${todaysDate}T00:00:00Z");
       var jsonData = json.decode(response.body);
       try{
-      countryDataForThirtyDays[country] =
-      CountryDataList.fromJson(jsonData);
+      prefs.setString("${country['Country']}", response.body);
+      // countryDataForThirtyDays[country] =
+      // CountryDataList.fromJson(jsonData);
       }
       catch(Exception){
         continue;
