@@ -13,8 +13,12 @@ class _RecoveryState extends State<Recovery> {
   Widget build(BuildContext context) {
     return Consumer<Store>(
       builder: (context, store, child) {
-        return Scaffold(
-            body: new GridView.builder(
+        return Scaffold(body: FutureBuilder(
+          future: store.getCountryDataFromSharedPref(),
+          builder: (context, snapshot) {
+            if(snapshot.hasData){
+
+            return new GridView.builder(
                 itemCount: store.countries.length,
                 gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3),
@@ -24,14 +28,23 @@ class _RecoveryState extends State<Recovery> {
                     child: Container(
                       child: Stack(
                         children: <Widget>[
-                          Flags.getFullFlag("${store.countries[index]['ISO2']}",300,200),
-                           Center(child: Text("${store.countries[index]['Country']}")),
+                          Flags.getFullFlag(
+                              "${store.countries[index]['ISO2']}", 300, 200),
+                          Center(
+                              child:
+                                  Text("${store.countries[index]['Country']}")),
                         ],
                       ),
                       color: Colors.green[100],
                     ),
                   );
-                }));
+                });
+            }
+            else{
+              return CircularProgressIndicator();
+            }
+          },
+        ));
       },
     );
   }

@@ -36,25 +36,26 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    // getCountries().then((onValue) {
-    //     print(onValue);
-    //   if (onValue != null) {
-    //     getCountryData().then((onValue) {
-    //       print(onValue);
-    //     });
-    //   } else {
-    //     print("NO data");
-    //   }
-    // });
-    //  getCountryData().then((v) => print(v));
+    checkIfDataExists();
+  }
+
+  void checkIfDataExists() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString('Country') == null) {
+      getCountryData().then((v) {
+        print("Data Fetched");
+         Provider.of<Store>(context, listen: false).getCountryDataFromSharedPref();
+         print("Stored");
+      });
+    } else {
+      print("Data exists");
+    }
   }
 
   static DateTime today = new DateTime.now();
-  static DateTime daysAgo = today.subtract(new Duration(days: 1));
+  static DateTime daysAgo = today.subtract(new Duration(days: 15));
   var todaysDate = new DateFormat("yyyy-MM-dd").format(today);
   var thirtydaysago = new DateFormat("yyyy-MM-dd").format(daysAgo);
-
-  
 
   // Future<List> getCountries() async {
   //   http.Response response =
@@ -62,28 +63,24 @@ class _MyHomePageState extends State<MyHomePage> {
   //   countries = json.decode(response.body);
   //   return countries;
   // }
-   
-  Future<Map<String, CountryDataList>> getCountryData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, CountryDataList> countryDataForThirtyDays = {};
+
+  Future<void> getCountryData() async {
+    Map<String, String> countryDataForThirtyDays = {};
     print("QUERY 2");
-    int i=0;
-    for (var country in Provider.of<Store>(context,listen: false).countries) {
+    int i = 0;
+    for (var country in Provider.of<Store>(context, listen: false).countries) {
       print(i);
       i++;
       http.Response response = await http.get(
-          "https://api.covid19api.com/country/${country['Country']}?from=${thirtydaysago}T00:00:00Z&to=${todaysDate}T00:00:00Z");
-      var jsonData = json.decode(response.body);
-      try{
-      prefs.setString("${country['Country']}", response.body);
-      // countryDataForThirtyDays[country] =
-      // CountryDataList.fromJson(jsonData);
-      }
-      catch(Exception){
+          "https://api.covid19api.com/country/${country['Slug']}?from=${thirtydaysago}T00:00:00Z&to=${todaysDate}T00:00:00Z");
+      try {
+        countryDataForThirtyDays[country['Country']] = response.body;
+      } catch (Exception) {
         continue;
       }
     }
-    return countryDataForThirtyDays;
+    Provider.of<Store>(context, listen: false)
+        .setCountryData('Country', json.encode(countryDataForThirtyDays));
   }
 
   Widget build(BuildContext context) {
@@ -92,6 +89,15 @@ class _MyHomePageState extends State<MyHomePage> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
+            leading: GestureDetector(
+              onTap: () {
+                Provider.of<Store>(context, listen: false)
+                    .clearDataInSharedPref();
+              },
+              child: Icon(
+                Icons.clear,
+              ),
+            ),
             bottom: TabBar(
               tabs: [
                 Tab(child: Text("RECOVERY")),
