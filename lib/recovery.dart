@@ -13,38 +13,32 @@ class _RecoveryState extends State<Recovery> {
   Widget build(BuildContext context) {
     return Consumer<Store>(
       builder: (context, store, child) {
-        return Scaffold(body: FutureBuilder(
-          future: store.getCountryDataFromSharedPref(),
-          builder: (context, snapshot) {
-            if(snapshot.hasData){
-
-            return new GridView.builder(
-                itemCount: store.countries.length,
-                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3),
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      child: Stack(
-                        children: <Widget>[
-                          Flags.getFullFlag(
-                              "${store.countries[index]['ISO2']}", 300, 200),
-                          Center(
-                              child:
-                                  Text("${store.countries[index]['Country']}")),
-                        ],
+        if (store.countryDataList==null) {
+          return Center(child: CircularProgressIndicator());
+        } else {
+          return Scaffold(
+              body: GridView.builder(
+                  itemCount: store.countryDataList.length,
+                  gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3),
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        child: Stack(
+                          children: <Widget>[
+                            // Flags.getFullFlag(
+                            //     "${store.countryDataList[index]}", 300, 200),
+                            Center(
+                                child: Text(
+                                    "${store.countryDataList[index]}")),
+                          ],
+                        ),
+                        color: Colors.green[100],
                       ),
-                      color: Colors.green[100],
-                    ),
-                  );
-                });
-            }
-            else{
-              return CircularProgressIndicator();
-            }
-          },
-        ));
+                    );
+                  }));
+        }
       },
     );
   }

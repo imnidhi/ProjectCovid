@@ -5,7 +5,7 @@ class CountryData {
   String countryCode;
   String lat;
   String lon;
-  double cases;
+  int cases;
   String status;
   String date;
   double rateOfRecovery;

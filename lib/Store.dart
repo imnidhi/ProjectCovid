@@ -13,7 +13,7 @@ class Store with ChangeNotifier {
     {"Country": "Switzerland", "Slug": "switzerland", "ISO2": "CH"},
     // {"Country": "India", "Slug": "india", "ISO2": "IN"},
   ];
-  Map<String, CountryDataList> countryData = {};
+  Map<String, CountryDataList> countryDataList={};
 
   void setCountryData(String countryName, String countryDataMap) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -25,14 +25,16 @@ class Store with ChangeNotifier {
     prefs.clear();
   }
 
-  Future<Map<String, CountryDataList>> getCountryDataFromSharedPref() async {
+  Future<void> getCountryDataFromSharedPref() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(prefs.getString('Country').runtimeType);
+    Map<String, CountryDataList> countryData = {};
     var countryDataMap = json.decode(prefs.getString('Country'));
     countryDataMap.forEach((country, jsonList) {
-      print(jsonDecode(jsonList).runtimeType);
       countryData[country] = CountryDataList.fromJson(jsonDecode(jsonList));
     });
-    return countryData;
+    countryDataList = countryData;
+    print(countryData);
+    print(countryDataList);
+    notifyListeners();
   }
 }
