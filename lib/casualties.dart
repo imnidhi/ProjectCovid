@@ -33,15 +33,32 @@ class _CasualtiesState extends State<Casualties> {
                           child: Stack(
                             children: <Widget>[
                               Flags.getFullFlag(
-                                  "${store.deaths[index]['ISO']}",
-                                  300,
-                                  200),
+                                  "${store.deaths[index]['ISO']}", 300, 200),
+                              Positioned(
+                                right: 0,
+                                top: 0,
+                                child: SizedBox(
+                                  height: 40,
+                                  width: 40,
+                                  child: new ClipOval(
+                                    child: Material(
+                                        color: Colors.black,
+                                        child: Center(
+                                          child: Text(
+                                            "${store.deaths[index]['rateOfDeaths']}%",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                        )),
+                                  ),
+                                ),
+                              ),
                               Center(
                                   child: Text(
                                       "${store.deaths[index]['Country']}")),
                             ],
                           ),
-                          color: Colors.green[100],
                         ),
                       ),
                     );

@@ -30,16 +30,37 @@ class _RecoveryState extends State<Recovery> {
                           store.calculateRecoveryandDeathRate();
                         },
                         child: Container(
+                          
                           child: Stack(
                             children: <Widget>[
                               Flags.getFullFlag(
-                                  "${store.recovered[index]['ISO']}",
-                                  300,
-                                  200),
-                              Center(child: Text("${store.recovered[index]['Country']}")),
+                                  "${store.recovered[index]['ISO']}", 300, 200),
+                              Positioned(
+                                right: 0,
+                                top: 0,
+                                child: SizedBox(
+                                  height: 40,
+                                  width: 40,
+                                  child: new ClipOval(
+                                    child: Material(
+                                        color: Colors.black,
+                                        child: Center(
+                                          child: Text(
+                                            "${store.recovered[index]['rateOfRecovery']}%",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                        )),
+                                  ),
+                                ),
+                              ),
+                              Center(
+                                  child: Text(
+                                      "${store.recovered[index]['Country']}")),
                             ],
                           ),
-                          color: Colors.green[100],
+                          
                         ),
                       ),
                     );
