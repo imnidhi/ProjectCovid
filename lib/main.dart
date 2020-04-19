@@ -41,12 +41,17 @@ class _MyHomePageState extends State<MyHomePage> {
       Provider.of<Store>(context, listen: false).getCountryData().then((v) {
         print("Data Fetched");
         Provider.of<Store>(context, listen: false)
-            .getCountryDataFromSharedPref();
+            .getCountryDataFromSharedPref().then((onValue){
+              Provider.of<Store>(context, listen: false).calculateRecoveryandDeathRate(); 
+            });
         print("Stored");
       });
     } else {
       print("Data exists");
-      Provider.of<Store>(context, listen: false).getCountryDataFromSharedPref();
+      Provider.of<Store>(context, listen: false).getCountryDataFromSharedPref().then((onValue){
+              Provider.of<Store>(context, listen: false).calculateRecoveryandDeathRate(); 
+
+      });
     }
   }
 

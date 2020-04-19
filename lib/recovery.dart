@@ -18,22 +18,29 @@ class _RecoveryState extends State<Recovery> {
         } else {
           return Scaffold(
               body: GridView.builder(
-                  itemCount: store.countryDataList.length,
+                  itemCount: store.countryRates.length,
                   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3),
                   itemBuilder: (BuildContext context, int index) {
-                    var keys = store.countryDataList.keys.toList();
+                    // var keys = store.countryDataList.keys.toList();
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        child: Stack(
-                          children: <Widget>[
-                            Flags.getFullFlag(
-                                "${store.countries[index]['ISO2']}", 300, 200),
-                            Center(child: Text("${keys[index]}")),
-                          ],
+                      child: GestureDetector(
+                        onTap: () {
+                          store.calculateRecoveryandDeathRate();
+                        },
+                        child: Container(
+                          child: Stack(
+                            children: <Widget>[
+                              Flags.getFullFlag(
+                                  "${store.countryRates[index]['ISO']}",
+                                  300,
+                                  200),
+                              Center(child: Text("${store.countryRates[index]['Country']}")),
+                            ],
+                          ),
+                          color: Colors.green[100],
                         ),
-                        color: Colors.green[100],
                       ),
                     );
                   }));

@@ -12,8 +12,7 @@ class Store with ChangeNotifier {
   var todaysDate = new DateFormat("yyyy-MM-dd").format(today);
   var thirtydaysago = new DateFormat("yyyy-MM-dd").format(daysAgo);
   Map<String, CountryDataList> countryDataList = {};
-  List recoveries = [];
-  List casualties = [];
+  List countryRates = [];
   List countries = [
     {"Country": "Switzerland", "Slug": "switzerland", "ISO2": "CH"},
     {"Country": "India", "Slug": "india", "ISO2": "IN"},
@@ -26,6 +25,15 @@ class Store with ChangeNotifier {
   //   countries = json.decode(response.body);
   //   return countries;
   // }
+  void calculateRecoveryandDeathRate(){
+    countryDataList.forEach((key,val){
+      double rateOfRecovery = ((val.countryDataList.last.recovered - val.countryDataList[0].recovered)*100)/val.countryDataList.last.recovered;
+      double rateOfDeath = ((val.countryDataList.last.deaths - val.countryDataList[0].deaths)*100)/val.countryDataList.last.deaths;
+      countryRates.add({"Country":key,"ISO":val.countryDataList[0].countryCode,"rateOfRecovery":rateOfRecovery.round(),"rateOfDeaths":rateOfDeath.round()});
+    });
+    notifyListeners();
+  }
+
 
   Future<void> getCountryData() async {
     Map<String, String> countryDataForThirtyDays = {};
@@ -33,6 +41,7 @@ class Store with ChangeNotifier {
     for (var country in countries) {
       http.Response response = await http.get(
           "https://api.covid19api.com/country/${country['Slug']}?from=${thirtydaysago}T00:00:00Z&to=${todaysDate}T00:00:00Z");
+          print(response.body);
       try {
         countryDataForThirtyDays[country['Country']] = response.body;
       } catch (Exception) {
