@@ -12,7 +12,8 @@ class Store with ChangeNotifier {
   var todaysDate = new DateFormat("yyyy-MM-dd").format(today);
   var thirtydaysago = new DateFormat("yyyy-MM-dd").format(daysAgo);
   Map<String, CountryDataList> countryDataList = {};
-  List countryRates = [];
+  List recovered = [];
+  List deaths = [];
   List countries = [
     {"Country": "Switzerland", "Slug": "switzerland", "ISO2": "CH"},
     {"Country": "India", "Slug": "india", "ISO2": "IN"},
@@ -29,8 +30,14 @@ class Store with ChangeNotifier {
     countryDataList.forEach((key,val){
       double rateOfRecovery = ((val.countryDataList.last.recovered - val.countryDataList[0].recovered)*100)/val.countryDataList.last.recovered;
       double rateOfDeath = ((val.countryDataList.last.deaths - val.countryDataList[0].deaths)*100)/val.countryDataList.last.deaths;
-      countryRates.add({"Country":key,"ISO":val.countryDataList[0].countryCode,"rateOfRecovery":rateOfRecovery.round(),"rateOfDeaths":rateOfDeath.round()});
+      recovered.add({"Country":key,"ISO":val.countryDataList[0].countryCode,"rateOfRecovery":rateOfRecovery.round()});
+      deaths.add({"Country":key,"ISO":val.countryDataList[0].countryCode,"rateOfDeaths":rateOfDeath.round()});
     });
+    recovered.sort((a, b) => a['rateOfRecovery'].compareTo(b['rateOfRecovery']));
+    recovered = recovered.reversed.toList();
+    deaths.sort((a, b) => a['rateOfDeaths'].compareTo(b['rateOfDeaths']));
+    deaths = deaths.reversed.toList();
+
     notifyListeners();
   }
 

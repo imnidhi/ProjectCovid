@@ -18,7 +18,7 @@ class _RecoveryState extends State<Recovery> {
         } else {
           return Scaffold(
               body: GridView.builder(
-                  itemCount: store.countryRates.length,
+                  itemCount: store.recovered.length,
                   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3),
                   itemBuilder: (BuildContext context, int index) {
@@ -33,10 +33,10 @@ class _RecoveryState extends State<Recovery> {
                           child: Stack(
                             children: <Widget>[
                               Flags.getFullFlag(
-                                  "${store.countryRates[index]['ISO']}",
+                                  "${store.recovered[index]['ISO']}",
                                   300,
                                   200),
-                              Center(child: Text("${store.countryRates[index]['Country']}")),
+                              Center(child: Text("${store.recovered[index]['Country']}")),
                             ],
                           ),
                           color: Colors.green[100],
