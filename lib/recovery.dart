@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_covid/Store.dart';
 import 'package:provider/provider.dart';
 import 'package:flag/flag.dart';
+import 'Graph.dart';
 
 class Recovery extends StatefulWidget {
   @override
@@ -22,15 +23,19 @@ class _RecoveryState extends State<Recovery> {
                   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3),
                   itemBuilder: (BuildContext context, int index) {
-                    // var keys = store.countryDataList.keys.toList();
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(
                         onTap: () {
-                          store.calculateRecoveryandDeathRate();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Graphs(
+                                    store.recovered[index]['Country'],
+                                    "Recoveries",store.recovered[index]['rateOfRecovery'])),
+                          );
                         },
                         child: Container(
-                          
                           child: Stack(
                             children: <Widget>[
                               Flags.getFullFlag(
@@ -60,7 +65,6 @@ class _RecoveryState extends State<Recovery> {
                                       "${store.recovered[index]['Country']}")),
                             ],
                           ),
-                          
                         ),
                       ),
                     );

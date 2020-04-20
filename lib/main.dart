@@ -6,7 +6,7 @@ import 'casualties.dart';
 import 'recovery.dart';
 
 void main() => runApp(MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => Store()),
+      ChangeNotifierProvider(create: (context) => Store(),),
     ], child: MyApp()));
 
 class MyApp extends StatelessWidget {
@@ -14,7 +14,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(),
+       theme: ThemeData(
+    accentColor: Colors.yellow,
+
+
+       ),
+     
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -41,22 +46,27 @@ class _MyHomePageState extends State<MyHomePage> {
       Provider.of<Store>(context, listen: false).getCountryData().then((v) {
         print("Data Fetched");
         Provider.of<Store>(context, listen: false)
-            .getCountryDataFromSharedPref().then((onValue){
-              Provider.of<Store>(context, listen: false).calculateRecoveryandDeathRate(); 
-            });
+            .getCountryDataFromSharedPref()
+            .then((onValue) {
+          Provider.of<Store>(context, listen: false)
+              .calculateRecoveryandDeathRate();
+        });
         print("Stored");
       });
     } else {
       print("Data exists");
-      Provider.of<Store>(context, listen: false).getCountryDataFromSharedPref().then((onValue){
-              Provider.of<Store>(context, listen: false).calculateRecoveryandDeathRate(); 
-
+      Provider.of<Store>(context, listen: false)
+          .getCountryDataFromSharedPref()
+          .then((onValue) {
+        Provider.of<Store>(context, listen: false)
+            .calculateRecoveryandDeathRate();
       });
     }
   }
 
   Widget build(BuildContext context) {
     return MaterialApp(
+     
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -72,11 +82,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             bottom: TabBar(
               tabs: [
-                Tab(child: Text("RECOVERY")),
-                Tab(child: Text("DEATH")),
+                Tab(child: Text("RATE OF RECOVERY FOR LAST 30 DAYS")),
+                Tab(child: Text("RATE OF DEATH FOR LAST 30 DAYS")),
               ],
             ),
-            title: Text('Tabs Demo'),
+            title: Text('COVID-19'),
           ),
           body: TabBarView(
             children: [Recovery(), Casualties()],

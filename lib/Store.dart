@@ -19,21 +19,35 @@ class Store with ChangeNotifier {
     {"Country": "India", "Slug": "india", "ISO2": "IN"},
   ];
 
-  
   // Future<List> getCountries() async {
   //   http.Response response =
   //       await http.get("https://api.covid19api.com/countries");
   //   countries = json.decode(response.body);
   //   return countries;
   // }
-  void calculateRecoveryandDeathRate(){
-    countryDataList.forEach((key,val){
-      double rateOfRecovery = ((val.countryDataList.last.recovered - val.countryDataList[0].recovered)*100)/val.countryDataList.last.recovered;
-      double rateOfDeath = ((val.countryDataList.last.deaths - val.countryDataList[0].deaths)*100)/val.countryDataList.last.deaths;
-      recovered.add({"Country":key,"ISO":val.countryDataList[0].countryCode,"rateOfRecovery":rateOfRecovery.round()});
-      deaths.add({"Country":key,"ISO":val.countryDataList[0].countryCode,"rateOfDeaths":rateOfDeath.round()});
+  void calculateRecoveryandDeathRate() {
+    countryDataList.forEach((key, val) {
+      double rateOfRecovery = ((val.countryDataList.last.recovered -
+                  val.countryDataList[0].recovered) *
+              100) /
+          val.countryDataList.last.recovered;
+      double rateOfDeath =
+          ((val.countryDataList.last.deaths - val.countryDataList[0].deaths) *
+                  100) /
+              val.countryDataList.last.deaths;
+      recovered.add({
+        "Country": key,
+        "ISO": val.countryDataList[0].countryCode,
+        "rateOfRecovery": rateOfRecovery.round()
+      });
+      deaths.add({
+        "Country": key,
+        "ISO": val.countryDataList[0].countryCode,
+        "rateOfDeaths": rateOfDeath.round()
+      });
     });
-    recovered.sort((a, b) => a['rateOfRecovery'].compareTo(b['rateOfRecovery']));
+    recovered
+        .sort((a, b) => a['rateOfRecovery'].compareTo(b['rateOfRecovery']));
     recovered = recovered.reversed.toList();
     deaths.sort((a, b) => a['rateOfDeaths'].compareTo(b['rateOfDeaths']));
     deaths = deaths.reversed.toList();
@@ -41,14 +55,13 @@ class Store with ChangeNotifier {
     notifyListeners();
   }
 
-
   Future<void> getCountryData() async {
     Map<String, String> countryDataForThirtyDays = {};
     print("QUERY 2");
     for (var country in countries) {
       http.Response response = await http.get(
           "https://api.covid19api.com/country/${country['Slug']}?from=${thirtydaysago}T00:00:00Z&to=${todaysDate}T00:00:00Z");
-          print(response.body);
+      print(response.body);
       try {
         countryDataForThirtyDays[country['Country']] = response.body;
       } catch (Exception) {
@@ -77,5 +90,23 @@ class Store with ChangeNotifier {
     });
     countryDataList = countryData;
     notifyListeners();
+  }
+
+  List<double> getDataPointsForRecovery(String countryName) {
+    List<double> dataPoints = [];
+    for (CountryData data in countryDataList[countryName].countryDataList) {
+      dataPoints.add(data.recovered.toDouble());
+    }
+    print(dataPoints);
+    return dataPoints;
+  }
+
+    List<double> getDataPointsForDeaths(String countryName) {
+    List<double> dataPoints = [];
+    for (CountryData data in countryDataList[countryName].countryDataList) {
+      dataPoints.add(data.deaths.toDouble());
+    }
+    print(dataPoints);
+    return dataPoints;
   }
 }

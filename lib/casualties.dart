@@ -1,5 +1,6 @@
 import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
+import 'package:project_covid/Graph.dart';
 import 'package:provider/provider.dart';
 import 'Store.dart';
 
@@ -27,7 +28,13 @@ class _CasualtiesState extends State<Casualties> {
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(
                         onTap: () {
-                          store.calculateRecoveryandDeathRate();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Graphs(
+                                    store.recovered[index]['Country'],
+                                    "Deaths",store.deaths[index]['rateOfDeaths'])),
+                          );
                         },
                         child: Container(
                           child: Stack(
