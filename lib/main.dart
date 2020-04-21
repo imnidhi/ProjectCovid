@@ -18,9 +18,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: Colors.black,
-        scaffoldBackgroundColor: Colors.grey[600]
-      ),
+          primaryColor: Colors.black,
+          scaffoldBackgroundColor: Colors.grey[600]),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -35,6 +34,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var summary = {};
   @override
   void initState() {
     super.initState();
@@ -67,34 +67,53 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            leading: GestureDetector(
-              onTap: () {
-                Provider.of<Store>(context, listen: false)
-                    .clearDataInSharedPref();
-              },
-              child: Icon(
-                Icons.clear,
+        body: DefaultTabController(
+            length: 3,
+            child: Scaffold(
+              appBar: AppBar(
+                leading: GestureDetector(
+                  onTap: () {
+                    Provider.of<Store>(context, listen: false)
+                        .clearDataInSharedPref();
+                  },
+                  child: Icon(
+                    Icons.clear,
+                  ),
+                ),
+                bottom: TabBar(
+                  indicatorColor: Colors.white,
+                  tabs: [
+                    Tab(
+                      child: Text("TOTAL"),
+                    ),
+                    Tab(child: Text("RATE OF RECOVERY FOR LAST 30 DAYS")),
+                    Tab(child: Text("RATE OF DEATH FOR LAST 30 DAYS")),
+                  ],
+                ),
+                title: Text('COVID-19'),
               ),
-            ),
-            bottom: TabBar(
-              indicatorColor: Colors.white,
-              tabs: [
-                Tab(child: Text("TOTAL"),),
-                Tab(child: Text("RATE OF RECOVERY FOR LAST 30 DAYS")),
-                Tab(child: Text("RATE OF DEATH FOR LAST 30 DAYS")),
-              ],
-            ),
-            title: Text('COVID-19'),
-          ),
-          body: TabBarView(
-            children: [PieChart(),Recovery(), Casualties()],
-          ),
-        ),
-      ),
-    );
+              body: TabBarView(
+                children: [
+                  FutureBuilder(
+                    future: Provider.of<Store>(context).getGlobalSummary(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return PieChart(
+                            snapshot.data['TotalConfirmed'],
+                            snapshot.data['NewConfirmed'],
+                            snapshot.data['TotalDeaths'],
+                            snapshot.data['NewDeaths'],
+                            snapshot.data['TotalRecovered'],
+                            snapshot.data['NewRecovered']);
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
+                  Recovery(),
+                  Casualties()
+                ],
+              ),
+            )));
   }
 }

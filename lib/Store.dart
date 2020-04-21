@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class Store with ChangeNotifier {
   Map<String, CountryDataList> countryDataList = {};
   List recovered = [];
   List deaths = [];
+  // var summary = {};
   List countries = [
     {"Country": "Switzerland", "Slug": "switzerland", "ISO2": "CH"},
     {"Country": "India", "Slug": "india", "ISO2": "IN"},
@@ -77,7 +79,7 @@ class Store with ChangeNotifier {
         await http.get("https://api.covid19api.com/summary");
     var jsonData = json.decode(response.body);
     print(jsonData);
-    return jsonData;
+    return jsonData['Global'];
   }
 
   void setCountryData(String countryName, String countryDataMap) async {

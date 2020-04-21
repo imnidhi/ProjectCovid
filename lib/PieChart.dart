@@ -1,11 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
-
-import 'Store.dart';
 
 class GlobalData {
   String title;
@@ -15,6 +9,15 @@ class GlobalData {
 }
 
 class PieChart extends StatefulWidget {
+  int totalConfirmed;
+  int newConfirmed;
+  int totalDeaths;
+  int newDeaths;
+  int totalRecovered;
+  int newRecovered;
+  PieChart(this.totalConfirmed, this.newConfirmed, this.totalDeaths,
+      this.newDeaths, this.totalRecovered, this.newRecovered);
+
   @override
   _PieChartState createState() => _PieChartState();
 }
@@ -25,29 +28,19 @@ class _PieChartState extends State<PieChart> {
   void initState() {
     super.initState();
     _seriesPieData = List<charts.Series<GlobalData, String>>();
-    Provider.of<Store>(context).getGlobalSummary().then((data) {
-      _getGlobalSummary(
-          data['Global']['TotalConfirmed'],
-          data['Global']['NewConfirmed'],
-          data['Global']['TotalDeaths'],
-          data['Global']['NewDeaths'],
-          data['Global']['TotalRecovered'],
-          data['Global']['NewRecovered']);
-    });
+    _getGlobalSummary();
   }
 
-  void _getGlobalSummary(int totalConfirmed, int newConfirmed, int totalDeaths,
-      int newDeaths, int totalRecovered, int newRecovered) {
+  void _getGlobalSummary() {
     var pieData = [
-      new GlobalData("Total Confirmed", totalConfirmed, Colors.blue),
-      new GlobalData("New Confirmed", newConfirmed, Colors.amber),
-      new GlobalData("Total Deaths", totalDeaths, Colors.red),
-      new GlobalData("New Deaths", newDeaths, Colors.redAccent),
-      new GlobalData("Total Recovered", totalRecovered, Colors.green),
-      new GlobalData("New Recovered", newRecovered, Colors.greenAccent),
-      // new GlobalData("Total Confirmed", 145, Colors.blue),
-      // new GlobalData("New Confirmed", 149, Colors.amber),
-      // new GlobalData("Total Deaths", 100, Colors.red),
+      new GlobalData(
+          "Total Confirmed", widget.totalConfirmed, Color(0xff18b0b0)),
+      new GlobalData("New Confirmed", widget.newConfirmed, Color(0xff8CDCCB)),
+      new GlobalData("Total Deaths", widget.totalDeaths, Colors.red[900]),
+      new GlobalData("New Deaths", widget.newDeaths, Color(0xffEE7854)),
+      new GlobalData(
+          "Total Recovered", widget.totalRecovered, Color(0xffB2D95A)),
+      new GlobalData("New Recovered", widget.newRecovered, Color(0xffF7C24F)),
     ];
 
     _seriesPieData.add(charts.Series(
@@ -62,35 +55,31 @@ class _PieChartState extends State<PieChart> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: Provider.of<Store>(context).getGlobalSummary(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Scaffold(
-                body: charts.PieChart(
-              _seriesPieData,
-              animate: true,
-              animationDuration: Duration(seconds: 1),
-              behaviors: [
-                new charts.DatumLegend(
-                  outsideJustification: charts.OutsideJustification.endDrawArea,
-                  horizontalFirst: false,
-                  desiredMaxRows: 2,
-                  cellPadding: new EdgeInsets.only(right: 4, bottom: 4),
-                  entryTextStyle: charts.TextStyleSpec(
-                      color: charts.MaterialPalette.white, fontSize: 16),
-                ),
-              ],
-              defaultRenderer: new charts.ArcRendererConfig(
-                  arcWidth: 100,
-                  arcRendererDecorators: [
-                    new charts.ArcLabelDecorator(
-                        labelPosition: charts.ArcLabelPosition.inside)
-                  ]),
-            ));
-          } else {
-            return CircularProgressIndicator();
-          }
-        });
+    return Scaffold(
+        body: Stack(
+      children: <Widget>[
+        charts.PieChart(
+          _seriesPieData,
+          animate: true,
+          animationDuration: Duration(seconds: 1),
+          behaviors: [
+            new charts.DatumLegend(
+              outsideJustification: charts.OutsideJustification.endDrawArea,
+              horizontalFirst: false,
+              desiredMaxRows: 3,
+              cellPadding: new EdgeInsets.only(top: 16, right: 4, bottom: 4),
+              entryTextStyle: charts.TextStyleSpec(
+                  color: charts.MaterialPalette.white, fontSize: 12),
+            ),
+          ],
+          defaultRenderer: new charts.ArcRendererConfig(
+              arcWidth: 100,
+              arcRendererDecorators: [
+                new charts.ArcLabelDecorator(
+                    labelPosition: charts.ArcLabelPosition.inside)
+              ]),
+        ),
+      ],
+    ));
   }
 }
