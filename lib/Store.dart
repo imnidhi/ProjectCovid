@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +70,14 @@ class Store with ChangeNotifier {
       }
     }
     setCountryData('Country', json.encode(countryDataForThirtyDays));
+  }
+
+  Future<dynamic> getGlobalSummary() async {
+    http.Response response =
+        await http.get("https://api.covid19api.com/summary");
+    var jsonData = json.decode(response.body);
+    print(jsonData);
+    return jsonData;
   }
 
   void setCountryData(String countryName, String countryDataMap) async {

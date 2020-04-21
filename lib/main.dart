@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'PieChart.dart';
 import 'Store.dart';
 import 'casualties.dart';
 import 'recovery.dart';
@@ -67,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
             leading: GestureDetector(
@@ -82,6 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
             bottom: TabBar(
               indicatorColor: Colors.white,
               tabs: [
+                Tab(child: Text("TOTAL"),),
                 Tab(child: Text("RATE OF RECOVERY FOR LAST 30 DAYS")),
                 Tab(child: Text("RATE OF DEATH FOR LAST 30 DAYS")),
               ],
@@ -89,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text('COVID-19'),
           ),
           body: TabBarView(
-            children: [Recovery(), Casualties()],
+            children: [PieChart(),Recovery(), Casualties()],
           ),
         ),
       ),
