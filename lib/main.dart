@@ -6,7 +6,9 @@ import 'casualties.dart';
 import 'recovery.dart';
 
 void main() => runApp(MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => Store(),),
+      ChangeNotifierProvider(
+        create: (context) => Store(),
+      ),
     ], child: MyApp()));
 
 class MyApp extends StatelessWidget {
@@ -14,12 +16,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-       theme: ThemeData(
-    accentColor: Colors.yellow,
-
-
-       ),
-     
+      theme: ThemeData(
+        primaryColor: Colors.black,
+        scaffoldBackgroundColor: Colors.grey[600]
+      ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -65,9 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget build(BuildContext context) {
-    return MaterialApp(
-     
-      home: DefaultTabController(
+    return Scaffold(
+      body: DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
@@ -81,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             bottom: TabBar(
+              indicatorColor: Colors.white,
               tabs: [
                 Tab(child: Text("RATE OF RECOVERY FOR LAST 30 DAYS")),
                 Tab(child: Text("RATE OF DEATH FOR LAST 30 DAYS")),

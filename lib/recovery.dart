@@ -32,7 +32,8 @@ class _RecoveryState extends State<Recovery> {
                             MaterialPageRoute(
                                 builder: (context) => Graphs(
                                     store.recovered[index]['Country'],
-                                    "Recoveries",store.recovered[index]['rateOfRecovery'])),
+                                    "Recoveries",
+                                    store.recovered[index]['rateOfRecovery'])),
                           );
                         },
                         child: Container(
@@ -60,9 +61,15 @@ class _RecoveryState extends State<Recovery> {
                                   ),
                                 ),
                               ),
-                              Center(
-                                  child: Text(
-                                      "${store.recovered[index]['Country']}")),
+                              Positioned(
+                                bottom: 0,
+                                child: Text(
+                                  "${store.recovered[index]['Country']}",
+                                  style: TextStyle(color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold),
+                                ),
+                              ),
                             ],
                           ),
                         ),

@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'Store.dart';
 
-class Graphs extends StatelessWidget {
+class Graphs extends StatefulWidget {
   String countryName;
   String state;
   int rate;
@@ -13,23 +13,35 @@ class Graphs extends StatelessWidget {
     this.state = state;
     this.rate = rate;
   }
-  var data = [0.0, 1.0, 1.5, 2.0, 0.0, 0.0, -0.5, -1.0, -0.5, 0.0, 0.0];
+
+  @override
+  _GraphsState createState() => _GraphsState();
+}
+
+class _GraphsState extends State<Graphs>{
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     List dataPoints = [];
-    state == "Recoveries"
-        ? dataPoints =
-            Provider.of<Store>(context).getDataPointsForRecovery(countryName)
-        : dataPoints =
-            Provider.of<Store>(context).getDataPointsForDeaths(countryName);
+    widget.state == "Recoveries"
+        ? dataPoints = Provider.of<Store>(context)
+            .getDataPointsForRecovery(widget.countryName)
+        : dataPoints = Provider.of<Store>(context)
+            .getDataPointsForDeaths(widget.countryName);
     return new Scaffold(
-      appBar: AppBar(title: Text("$state over last 30 days")),
+      appBar: AppBar(title: Text("${widget.state} over last 30 days"))
+      ,
       body: Column(
         children: <Widget>[
-          Text("${state.toUpperCase()} TODAY: ${dataPoints.last.round()}",
+          Text(
+              "${widget.state.toUpperCase()} TODAY: ${dataPoints.last.round()}",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           Text(
-            "${state.toUpperCase()} 30 DAYS AGO: ${dataPoints[0].round()}",
+            "${widget.state.toUpperCase()} 30 DAYS AGO: ${dataPoints[0].round()}",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Center(
@@ -38,35 +50,37 @@ class Graphs extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("RATE OF ${state.toUpperCase()} OVER 30 DAYS: $rate%"),
+                  Text(
+                      "RATE OF ${widget.state.toUpperCase()} OVER 30 DAYS: ${widget.rate}%"),
                   new Container(
                     width: 400.0,
                     height: 300.0,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: new Sparkline(
-                        data: dataPoints,
-                        lineColor:
-                            state == "Recoveries" ? Colors.green : Colors.red,
-                        fillMode: FillMode.below,
-                        fillColor: state == "Recoveries"
-                            ? Colors.lightGreen[200]
-                            : Colors.red[200],
-                        fillGradient: new LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: state == "Recoveries"
-                              ? [Colors.green[800], Colors.green[200]]
-                              : [Colors.red[800], Colors.red[200]],
+                          data: dataPoints,
+                          lineColor: widget.state == "Recoveries"
+                              ? Colors.green
+                              : Colors.red,
+                          fillMode: FillMode.below,
+                          fillColor: widget.state == "Recoveries"
+                              ? Colors.lightGreen[200]
+                              : Colors.red[200],
+                          fillGradient: new LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: widget.state == "Recoveries"
+                                ? [Colors.green[800], Colors.green[200]]
+                                : [Colors.red[800], Colors.red[200]],
+                          ),
+                          pointsMode: PointsMode.all,
+                          pointSize: 8.0,
+                          pointColor: Colors.blue,
                         ),
-                        pointsMode: PointsMode.all,
-                        pointSize: 8.0,
-                        pointColor: Colors.blue,
-                      ),
                     ),
                   ),
                   Text(
-                    "Curve for $state over last 30 days",
+                    "Curve for ${widget.state} over last 30 days",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   )
                 ],

@@ -61,9 +61,15 @@ class _CasualtiesState extends State<Casualties> {
                                   ),
                                 ),
                               ),
-                              Center(
-                                  child: Text(
-                                      "${store.deaths[index]['Country']}")),
+                              Positioned(
+                                bottom: 0,
+                                child: Text(
+                                  "${store.recovered[index]['Country']}",
+                                  style: TextStyle(color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold),
+                                ),
+                              ),
                             ],
                           ),
                         ),
