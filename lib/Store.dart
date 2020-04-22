@@ -82,7 +82,7 @@ class Store with ChangeNotifier {
   void setGlobalDataToSharedPrefs(String globalData) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('globalData', globalData);
-    prefs.setString('date', DateFormat("dd").format(DateTime.now()));
+    prefs.setString('date', DateFormat("yyyy-MM-dd").format(DateTime.now()));
   }
 
   Future<void> getGlobalDataFromSharedPrefs() async {

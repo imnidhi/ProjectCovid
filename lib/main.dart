@@ -38,13 +38,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    checkIfDataExists( Provider.of<Store>(context, listen: false).todaysDate);
+    print(Provider.of<Store>(context, listen: false).todaysDate);
+    checkIfDataExists(Provider.of<Store>(context, listen: false).todaysDate);
     Provider.of<Store>(context, listen: false).checkifGlobalDataExists();
   }
 
   void checkIfDataExists(String date) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getString('Country') == null||prefs.getString('date')!=date) {
+    print(prefs.getString('date'));
+    if (prefs.getString('Country') == null || date!=prefs.getString('date')) {
       Provider.of<Store>(context, listen: false).getCountryData().then((v) {
         print("Data Fetched");
         Provider.of<Store>(context, listen: false)
