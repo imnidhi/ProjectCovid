@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -16,7 +15,7 @@ class Store with ChangeNotifier {
   Map<String, CountryDataList> countryDataList = {};
   List recovered = [];
   List deaths = [];
-  Map<String,dynamic> summary = {};
+  Map<String, dynamic> summary = {};
   List countries = [
     {"Country": "Switzerland", "Slug": "switzerland", "ISO2": "CH"},
     {"Country": "India", "Slug": "india", "ISO2": "IN"},
@@ -83,21 +82,24 @@ class Store with ChangeNotifier {
   void setGlobalDataToSharedPrefs(String globalData) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('globalData', globalData);
+    prefs.setString('date', DateFormat("dd").format(DateTime.now()));
   }
-  Future<void> getGlobalDataFromSharedPrefs() async{
+
+  Future<void> getGlobalDataFromSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    summary =  json.decode(prefs.getString('globalData'));
+    summary = json.decode(prefs.getString('globalData'));
     notifyListeners();
   }
 
   Future<dynamic> checkifGlobalDataExists() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getString('globalData') == null) {
+    if (prefs.getString('globalData') == null ||
+        prefs.getString('date') !=todaysDate) {
       getGlobalSummary().then((onValue) {
-         getGlobalDataFromSharedPrefs();
+        getGlobalDataFromSharedPrefs();
       });
     } else {
-        getGlobalDataFromSharedPrefs();
+      getGlobalDataFromSharedPrefs();
     }
   }
 

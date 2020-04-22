@@ -38,13 +38,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    checkIfDataExists();
+    checkIfDataExists( Provider.of<Store>(context, listen: false).todaysDate);
     Provider.of<Store>(context, listen: false).checkifGlobalDataExists();
   }
 
-  void checkIfDataExists() async {
+  void checkIfDataExists(String date) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getString('Country') == null) {
+    if (prefs.getString('Country') == null||prefs.getString('date')!=date) {
       Provider.of<Store>(context, listen: false).getCountryData().then((v) {
         print("Data Fetched");
         Provider.of<Store>(context, listen: false)
@@ -94,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               body: TabBarView(
                 children: [
-                  Consumer<Store>(,
+                  Consumer<Store>(
                     builder: (context, store, child) {
                       if (store.summary['Global'] == null) {
                         return Center(child: CircularProgressIndicator());
