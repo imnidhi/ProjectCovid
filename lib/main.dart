@@ -39,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     checkIfDataExists();
+    Provider.of<Store>(context, listen: false).checkifGlobalDataExists();
   }
 
   void checkIfDataExists() async {
@@ -55,7 +56,6 @@ class _MyHomePageState extends State<MyHomePage> {
         print("Stored");
       });
     } else {
-      print("Data exists");
       Provider.of<Store>(context, listen: false)
           .getCountryDataFromSharedPref()
           .then((onValue) {
@@ -94,19 +94,18 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               body: TabBarView(
                 children: [
-                  FutureBuilder(
-                    future: Provider.of<Store>(context).getGlobalSummary(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return PieChart(
-                            snapshot.data['TotalConfirmed'],
-                            snapshot.data['NewConfirmed'],
-                            snapshot.data['TotalDeaths'],
-                            snapshot.data['NewDeaths'],
-                            snapshot.data['TotalRecovered'],
-                            snapshot.data['NewRecovered']);
-                      } else {
+                  Consumer<Store>(,
+                    builder: (context, store, child) {
+                      if (store.summary['Global'] == null) {
                         return Center(child: CircularProgressIndicator());
+                      } else {
+                        return PieChart(
+                            store.summary['Global']['TotalConfirmed'],
+                            store.summary['Global']['NewConfirmed'],
+                            store.summary['Global']['TotalDeaths'],
+                            store.summary['Global']['NewDeaths'],
+                            store.summary['Global']['TotalRecovered'],
+                            store.summary['Global']['NewRecovered']);
                       }
                     },
                   ),

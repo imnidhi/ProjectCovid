@@ -16,7 +16,7 @@ class Store with ChangeNotifier {
   Map<String, CountryDataList> countryDataList = {};
   List recovered = [];
   List deaths = [];
-  // var summary = {};
+  Map<String,dynamic> summary = {};
   List countries = [
     {"Country": "Switzerland", "Slug": "switzerland", "ISO2": "CH"},
     {"Country": "India", "Slug": "india", "ISO2": "IN"},
@@ -74,12 +74,31 @@ class Store with ChangeNotifier {
     setCountryData('Country', json.encode(countryDataForThirtyDays));
   }
 
-  Future<dynamic> getGlobalSummary() async {
+  Future<void> getGlobalSummary() async {
     http.Response response =
         await http.get("https://api.covid19api.com/summary");
-    var jsonData = json.decode(response.body);
-    print(jsonData);
-    return jsonData['Global'];
+    setGlobalDataToSharedPrefs(response.body);
+  }
+
+  void setGlobalDataToSharedPrefs(String globalData) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('globalData', globalData);
+  }
+  Future<void> getGlobalDataFromSharedPrefs() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    summary =  json.decode(prefs.getString('globalData'));
+    notifyListeners();
+  }
+
+  Future<dynamic> checkifGlobalDataExists() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString('globalData') == null) {
+      getGlobalSummary().then((onValue) {
+         getGlobalDataFromSharedPrefs();
+      });
+    } else {
+        getGlobalDataFromSharedPrefs();
+    }
   }
 
   void setCountryData(String countryName, String countryDataMap) async {
@@ -112,7 +131,7 @@ class Store with ChangeNotifier {
     return dataPoints;
   }
 
-    List<double> getDataPointsForDeaths(String countryName) {
+  List<double> getDataPointsForDeaths(String countryName) {
     List<double> dataPoints = [];
     for (CountryData data in countryDataList[countryName].countryDataList) {
       dataPoints.add(data.deaths.toDouble());
