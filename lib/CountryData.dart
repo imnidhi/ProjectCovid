@@ -33,7 +33,6 @@ class CountryData {
         deaths: json['Deaths'],
         recovered: json['Recovered'],
         active: json['Active'],
-    
         date: json['Date']);
   }
 }
@@ -51,4 +50,11 @@ class CountryDataList {
     }
     return CountryDataList(countryDataList: countryDataList);
   }
+}
+
+class GlobalData{
+  DateTime date;
+  int noOfRecoveries;
+  int noOfDeaths;
+  GlobalData(this.date,this.noOfRecoveries,this.noOfDeaths);
 }

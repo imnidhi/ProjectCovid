@@ -59,35 +59,34 @@ class _PieChartState extends State<PieChart> {
   @override
   Widget build(BuildContext context) {
     return Consumer<Store>(
-      builder: (context, store, child) {
-        return Scaffold(
-            body: Stack(
-          children: <Widget>[
-            charts.PieChart(
-              _seriesPieData,
-              animate: true,
-              animationDuration: Duration(seconds: 1),
-              behaviors: [
-                new charts.DatumLegend(
-                  outsideJustification: charts.OutsideJustification.endDrawArea,
-                  horizontalFirst: false,
-                  desiredMaxRows: 3,
-                  cellPadding:
-                      new EdgeInsets.only(top: 16, right: 4, bottom: 4),
-                  entryTextStyle: charts.TextStyleSpec(
-                      color: charts.MaterialPalette.white, fontSize: 12),
-                ),
-              ],
-              defaultRenderer: new charts.ArcRendererConfig(
-                  arcWidth: 100,
-                  arcRendererDecorators: [
-                    new charts.ArcLabelDecorator(
-                        labelPosition: charts.ArcLabelPosition.inside)
-                  ]),
+        builder: (context, store, child) {
+    return Scaffold(
+        body: Stack(
+      children: <Widget>[
+        charts.PieChart(
+          _seriesPieData,
+          animate: true,
+          animationDuration: Duration(seconds: 1),
+          behaviors: [
+            new charts.DatumLegend(
+              outsideJustification: charts.OutsideJustification.endDrawArea,
+              horizontalFirst: false,
+              desiredMaxRows: 3,
+              cellPadding:
+                  new EdgeInsets.only(top: 16, right: 4, bottom: 4),
+              entryTextStyle: charts.TextStyleSpec(
+                  color: charts.MaterialPalette.white, fontSize: 12),
             ),
           ],
-        ));
-      },
-    );
+          defaultRenderer: new charts.ArcRendererConfig(
+              arcWidth: 100,
+              arcRendererDecorators: [
+                new charts.ArcLabelDecorator()
+              ]),
+        ),
+      ],
+    ));
+        },
+      );
   }
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:project_covid/CountryData.dart';
 import 'package:project_covid/Store.dart';
 import 'package:provider/provider.dart';
 import 'package:flag/flag.dart';
 import 'Graph.dart';
+import 'LineGraph.dart';
 
 class Recovery extends StatefulWidget {
   @override
@@ -27,13 +29,13 @@ class _RecoveryState extends State<Recovery> {
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(
                         onTap: () {
+                          List<GlobalData> data = store.getDataForLineGraph(store.recovered[index]['Country']);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Graphs(
-                                    store.recovered[index]['Country'],
-                                    "Recoveries",
-                                    store.recovered[index]['rateOfRecovery'])),
+                                 builder: (context) => 
+                                Line("Recovery",store.recovered[index]['Country'],data),
+                            )
                           );
                         },
                         child: Container(

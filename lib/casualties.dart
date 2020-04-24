@@ -2,6 +2,8 @@ import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:project_covid/Graph.dart';
 import 'package:provider/provider.dart';
+import 'CountryData.dart';
+import 'LineGraph.dart';
 import 'Store.dart';
 
 class Casualties extends StatefulWidget {
@@ -28,13 +30,15 @@ class _CasualtiesState extends State<Casualties> {
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(
                         onTap: () {
+                          List<GlobalData> data = store.getDataForLineGraph(store.recovered[index]['Country']);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Graphs(
-                                    store.recovered[index]['Country'],
-                                    "Deaths",store.deaths[index]['rateOfDeaths'])),
+                                 builder: (context) => 
+                                Line("Deaths",store.recovered[index]['Country'],data),
+                            )
                           );
+                        
                         },
                         child: Container(
                           child: Stack(

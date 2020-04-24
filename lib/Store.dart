@@ -94,7 +94,7 @@ class Store with ChangeNotifier {
   Future<dynamic> checkifGlobalDataExists() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString('globalData') == null ||
-        prefs.getString('date') !=todaysDate) {
+        prefs.getString('date') != todaysDate) {
       getGlobalSummary().then((onValue) {
         getGlobalDataFromSharedPrefs();
       });
@@ -123,6 +123,15 @@ class Store with ChangeNotifier {
     countryDataList = countryData;
     notifyListeners();
   }
+
+  List<GlobalData> getDataForLineGraph(String countryName){
+    List<GlobalData> dataList = [];
+    for (CountryData data in countryDataList[countryName].countryDataList) {
+      dataList.add(GlobalData(DateTime.parse(data.date),data.recovered,data.deaths));
+    }
+    return dataList;
+  }
+
 
   List<double> getDataPointsForRecovery(String countryName) {
     List<double> dataPoints = [];
