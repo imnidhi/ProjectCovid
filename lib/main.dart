@@ -88,8 +88,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     Tab(
                       child: Text("TOTAL"),
                     ),
-                    Tab(child: Text("RATE OF RECOVERY FOR LAST 30 DAYS")),
-                    Tab(child: Text("RATE OF DEATH FOR LAST 30 DAYS")),
+                    Tab(child: Text("RECOVERY")),
+                    Tab(child: Text("DEATH")),
                   ],
                 ),
                 title: Text('COVID-19'),

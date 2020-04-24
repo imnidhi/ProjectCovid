@@ -20,12 +20,13 @@ class _CasualtiesState extends State<Casualties> {
           return Center(child: CircularProgressIndicator());
         } else {
           return Scaffold(
+            appBar: AppBar(title:Text("RATE OF DEATHS FOR LAST 30 DAYS",style: TextStyle(fontSize: 16,color: Colors.black),),
+            backgroundColor: Colors.lightBlue[50]),
               body: GridView.builder(
                   itemCount: store.deaths.length,
                   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3),
                   itemBuilder: (BuildContext context, int index) {
-                    // var keys = store.countryDataList.keys.toList();
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(

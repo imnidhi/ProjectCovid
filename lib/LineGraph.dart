@@ -41,40 +41,48 @@ class _LineState extends State<Line> {
   Widget build(BuildContext context) {
     return Consumer<Store>(
       builder: (context, store, child) {
-        return Scaffold(
-          body: Container(
-            height: 400,
-            child: charts.TimeSeriesChart(
-              _seriesPieData,
-              animate: true,
-              animationDuration: Duration(seconds: 1),
-              defaultRenderer: new charts.LineRendererConfig(
-                includePoints: true,
-              ),
-              selectionModels: [
-                charts.SelectionModelConfig(
-                    changedListener: (charts.SelectionModel model) {
-                  if (model.hasDatumSelection) {
-                    ToolTipMgr.setTitle({
-                      'title':
-                          '${DateFormat("MMM-dd").format(model.selectedSeries[0].domainFn(model.selectedDatum[0].index))}\nCases: ${model.selectedSeries[0].measureFn(model.selectedDatum[0].index)}',
-                    });
-                  }
-                })
-              ],
-              behaviors: [
-                new charts.LinePointHighlighter(
-                    symbolRenderer: CustomCircleSymbolRenderer()),
-                new charts.SelectNearest(
-                    eventTrigger: charts.SelectionTrigger.tapAndDrag),
-                new charts.ChartTitle('Dates',
-                    behaviorPosition: charts.BehaviorPosition.bottom,
-                    titleOutsideJustification:
-                        charts.OutsideJustification.middleDrawArea),
-                new charts.ChartTitle('Number of cases',
-                    behaviorPosition: charts.BehaviorPosition.start,
-                    titleOutsideJustification:
-                        charts.OutsideJustification.middleDrawArea)
+        return SafeArea(
+                  child: Scaffold(
+            body: Column(
+              children: <Widget>[
+                Text(widget.countryName.toUpperCase(),style: TextStyle(letterSpacing: 4,fontSize: 30),),
+                Container(
+                  height: 360,
+                  width: 360,
+                  child: charts.TimeSeriesChart(
+                    _seriesPieData,
+                    animate: true,
+                    animationDuration: Duration(seconds: 1),
+                    defaultRenderer: new charts.LineRendererConfig(
+                      includePoints: true,
+                    ),
+                    selectionModels: [
+                      charts.SelectionModelConfig(
+                          changedListener: (charts.SelectionModel model) {
+                        if (model.hasDatumSelection) {
+                          ToolTipMgr.setTitle({
+                            'title':
+                                '${DateFormat("MMM-dd").format(model.selectedSeries[0].domainFn(model.selectedDatum[0].index))}\nCases: ${model.selectedSeries[0].measureFn(model.selectedDatum[0].index)}',
+                          });
+                        }
+                      })
+                    ],
+                    behaviors: [
+                      new charts.LinePointHighlighter(
+                          symbolRenderer: CustomCircleSymbolRenderer()),
+                      new charts.SelectNearest(
+                          eventTrigger: charts.SelectionTrigger.tapAndDrag),
+                      new charts.ChartTitle('Dates',
+                          behaviorPosition: charts.BehaviorPosition.bottom,
+                          titleOutsideJustification:
+                              charts.OutsideJustification.middleDrawArea),
+                      new charts.ChartTitle('Number of cases',
+                          behaviorPosition: charts.BehaviorPosition.start,
+                          titleOutsideJustification:
+                              charts.OutsideJustification.middleDrawArea)
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

@@ -39,7 +39,7 @@ class CustomCircleSymbolRenderer extends CircleSymbolRenderer {
         strokeWidthPx: strokeWidthPx);
     canvas.drawRect(
         Rectangle(
-            bounds.left - 5, bounds.top, bounds.width + 50, bounds.height + 10),
+            bounds.top, bounds.top, bounds.width + 50, bounds.height + 10),
         fill: Color.transparent);
 
     ChartStyle.TextStyle textStyle = ChartStyle.TextStyle();
