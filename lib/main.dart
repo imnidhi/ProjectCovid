@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_covid/Maps.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'PieChart.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
           primaryColor: Colors.black,
-          scaffoldBackgroundColor: Colors.grey[600]),
+          scaffoldBackgroundColor: Colors.white),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -38,14 +39,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    print(Provider.of<Store>(context, listen: false).todaysDate);
     checkIfDataExists(Provider.of<Store>(context, listen: false).todaysDate);
     Provider.of<Store>(context, listen: false).checkifGlobalDataExists();
   }
 
   void checkIfDataExists(String date) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(prefs.getString('date'));
     if (prefs.getString('Country') == null || date!=prefs.getString('date')) {
       Provider.of<Store>(context, listen: false).getCountryData().then((v) {
         print("Data Fetched");
@@ -66,11 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
   }
-
   Widget build(BuildContext context) {
     return Scaffold(
         body: DefaultTabController(
-            length: 3,
+            length: 4,
             child: Scaffold(
               appBar: AppBar(
                 leading: GestureDetector(
@@ -85,9 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 bottom: TabBar(
                   indicatorColor: Colors.white,
                   tabs: [
-                    Tab(
-                      child: Text("TOTAL"),
-                    ),
+                    Tab(child: Text("TOTAL")),
+                    Tab(child: Text("MAP")),
                     Tab(child: Text("RECOVERY")),
                     Tab(child: Text("DEATH")),
                   ],
@@ -111,6 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       }
                     },
                   ),
+                  Maps(),
                   Recovery(),
                   Casualties()
                 ],

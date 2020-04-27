@@ -36,14 +36,15 @@ class _PieChartState extends State<PieChart> {
 
   void dataForPieChart() {
     var pieData = [
+
+      new GlobalData("New Confirmed", widget.newConfirmed, Color(0xff9552EA)),
+      new GlobalData("Total Deaths", widget.totalDeaths, Color(0xffF54F52)),
+      new GlobalData("New Deaths", widget.newDeaths, Color(0xffFFA32F)),
+      new GlobalData("New Recovered", widget.newRecovered, Color(0xffF17CB0)),
+            new GlobalData(
+          "Total Recovered", widget.totalRecovered, Color(0xff60BD68)),
       new GlobalData(
-          "Total Confirmed", widget.totalConfirmed, Color(0xff18b0b0)),
-      new GlobalData("New Confirmed", widget.newConfirmed, Color(0xff8CDCCB)),
-      new GlobalData("Total Deaths", widget.totalDeaths, Colors.red[900]),
-      new GlobalData("New Deaths", widget.newDeaths, Color(0xffEE7854)),
-      new GlobalData(
-          "Total Recovered", widget.totalRecovered, Color(0xffB2D95A)),
-      new GlobalData("New Recovered", widget.newRecovered, Color(0xffF7C24F)),
+          "Total Confirmed", widget.totalConfirmed, Color(0xff5DA5DA)),
     ];
 
     _seriesPieData.add(charts.Series(
@@ -61,11 +62,10 @@ class _PieChartState extends State<PieChart> {
     return Consumer<Store>(
         builder: (context, store, child) {
     return Scaffold(
-        body: Stack(
-      children: <Widget>[
-        charts.PieChart(
+        body: charts.PieChart(
           _seriesPieData,
           animate: true,
+
           animationDuration: Duration(seconds: 1),
           behaviors: [
             new charts.DatumLegend(
@@ -73,19 +73,21 @@ class _PieChartState extends State<PieChart> {
               horizontalFirst: false,
               desiredMaxRows: 3,
               cellPadding:
-                  new EdgeInsets.only(top: 16, right: 4, bottom: 4),
+                  new EdgeInsets.only(top: 4, right: 4, bottom: 4),
               entryTextStyle: charts.TextStyleSpec(
-                  color: charts.MaterialPalette.white, fontSize: 12),
+                  color: charts.MaterialPalette.black, fontSize: 14),
             ),
           ],
           defaultRenderer: new charts.ArcRendererConfig(
               arcWidth: 100,
+               startAngle: 6.5/ 5 * 3.14,
               arcRendererDecorators: [
-                new charts.ArcLabelDecorator()
+                new charts.ArcLabelDecorator(
+                  labelPosition: charts.ArcLabelPosition.auto,
+                  showLeaderLines: true
+                )
               ]),
-        ),
-      ],
-    ));
+        ));
         },
       );
   }
