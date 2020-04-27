@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class Store with ChangeNotifier {
   Map<String, CountryDataList> countryDataList = {};
   List recovered = [];
   List deaths = [];
+  List<Marker> allMarkers = [];
   Map<String, dynamic> summary = {};
   List countries = [
     {"Country": "Switzerland", "Slug": "switzerland", "ISO2": "CH"},
@@ -124,14 +126,14 @@ class Store with ChangeNotifier {
     notifyListeners();
   }
 
-  List<GlobalData> getDataForLineGraph(String countryName){
+  List<GlobalData> getDataForLineGraph(String countryName) {
     List<GlobalData> dataList = [];
     for (CountryData data in countryDataList[countryName].countryDataList) {
-      dataList.add(GlobalData(DateTime.parse(data.date),data.recovered,data.deaths));
+      dataList.add(
+          GlobalData(DateTime.parse(data.date), data.recovered, data.deaths));
     }
     return dataList;
   }
-
 
   List<double> getDataPointsForRecovery(String countryName) {
     List<double> dataPoints = [];
@@ -149,5 +151,19 @@ class Store with ChangeNotifier {
     }
     print(dataPoints);
     return dataPoints;
+  }
+
+  void getAllMarkers() {
+    countryDataList.forEach((key, value) {
+      print(value.countryDataList[0]);
+      allMarkers.add(Marker(
+        markerId: MarkerId('key'),
+        draggable: false,
+        position: LatLng(double.parse(value.countryDataList[0].lat),
+            double.parse(value.countryDataList[0].lon)),
+        infoWindow: InfoWindow(title: "$key",snippet: "${value.countryDataList.last.recovered}"),
+      ));
+    });
+    notifyListeners();
   }
 }
