@@ -160,8 +160,8 @@ class Store with ChangeNotifier {
         markerId: MarkerId('key'),
         draggable: false,
         position: LatLng(double.parse(value.countryDataList[0].lat),
-            double.parse(value.countryDataList[0].lon)),
-        infoWindow: InfoWindow(title: "$key",snippet: "${value.countryDataList.last.recovered}"),
+            double.parse(value.countryDataList[0].lon)),    
+         infoWindow: InfoWindow(title: "$key",snippet: "Confirmed cases: ${value.countryDataList.last.confirmed}\nRecovered cases: ${value.countryDataList.last.recovered}\nDeaths: ${value.countryDataList.last.deaths}"),
       ));
     });
     notifyListeners();

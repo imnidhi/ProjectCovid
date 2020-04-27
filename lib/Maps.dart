@@ -20,6 +20,7 @@ class _MapsState extends State<Maps> {
   void initState() {
     super.initState();
     Provider.of<Store>(context, listen: false).getAllMarkers();
+
     rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;
     });
@@ -37,11 +38,12 @@ class _MapsState extends State<Maps> {
           onMapCreated: (GoogleMapController controller) {
             mapController = controller;
             mapController.setMapStyle(_mapStyle);
+            
           },
           markers: Set.from(store.allMarkers),
           scrollGesturesEnabled: true,
           zoomGesturesEnabled: true,
-          myLocationButtonEnabled: false,
+          zoomControlsEnabled: true,
         ));
       },
     );

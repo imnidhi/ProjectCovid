@@ -19,8 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-          primaryColor: Colors.black,
-          scaffoldBackgroundColor: Colors.white),
+          primaryColor: Colors.black, scaffoldBackgroundColor: Colors.white),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -45,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void checkIfDataExists(String date) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getString('Country') == null || date!=prefs.getString('date')) {
+    if (prefs.getString('Country') == null || date != prefs.getString('date')) {
       Provider.of<Store>(context, listen: false).getCountryData().then((v) {
         print("Data Fetched");
         Provider.of<Store>(context, listen: false)
@@ -65,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
         body: DefaultTabController(
@@ -82,16 +82,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 bottom: TabBar(
                   indicatorColor: Colors.white,
+                  unselectedLabelColor: Colors.redAccent,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                  indicator: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: Colors.redAccent),
                   tabs: [
                     Tab(child: Text("TOTAL")),
-                    Tab(child: Text("MAP")),
-                    Tab(child: Text("RECOVERY")),
+                    Tab(child: Container(child: Text("MAP"))),
+                    Tab(child: Center(child: Text("RECOVERY"))),
                     Tab(child: Text("DEATH")),
                   ],
                 ),
                 title: Text('COVID-19'),
               ),
               body: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
                 children: [
                   Consumer<Store>(
                     builder: (context, store, child) {
