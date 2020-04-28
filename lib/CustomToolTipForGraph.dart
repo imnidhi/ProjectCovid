@@ -44,7 +44,7 @@ class CustomCircleSymbolRenderer extends CircleSymbolRenderer {
 
     ChartStyle.TextStyle textStyle = ChartStyle.TextStyle();
 
-    textStyle.color = Color.black;
+    textStyle.color = Color.white;
     textStyle.fontSize = 15;
 
     canvas.drawText(ChartText.TextElement(ToolTipMgr.title, style: textStyle),

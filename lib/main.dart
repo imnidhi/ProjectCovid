@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
       fontFamily: 'Raleway',
           primaryColor: Colors.black, scaffoldBackgroundColor: Colors.black),
@@ -94,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Tab(child: Text("TOTAL")),
                     Tab(child: Container(child: Text("MAP"))),
                     Tab(child: Center(child: Text("RECOVERY"))),
-                    Tab(child: Text("DEATH")),
+                    Tab(child: Text("DEATHS")),
                   ],
                 ),
                 title: Text('COVID-19'),

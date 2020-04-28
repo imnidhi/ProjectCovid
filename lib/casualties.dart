@@ -20,7 +20,7 @@ class _CasualtiesState extends State<Casualties> {
           return Center(child: CircularProgressIndicator());
         } else {
           return Scaffold(
-            appBar: AppBar(title:Text("RATE OF DEATHS FOR LAST 30 DAYS",style: TextStyle(fontSize: 16,color: Colors.black),),
+            appBar: AppBar(title:Text("DEATH RATE FOR LAST 30 DAYS",style: TextStyle(fontSize: 16,color: Colors.black),),
             backgroundColor: Colors.red[100]),
               body: GridView.builder(
                   itemCount: store.deaths.length,

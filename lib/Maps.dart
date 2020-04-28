@@ -26,24 +26,6 @@ class _MapsState extends State<Maps> {
       _mapStyle = string;
     });
   }
-  Widget infoBox(String text){
-     return Visibility(
-            child: Padding(
-                padding: const EdgeInsets.only(top: 8.0, left: 16, right: 16),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.red[50],
-                      border: Border.all(
-                        color: Colors.red[500],
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  height: 80,
-                  width:MediaQuery.of(context).size.width,
-                  child: Text(text),  
-                ),
-              ),
-     );
-  }
 
   @override
   Widget build(BuildContext context) {

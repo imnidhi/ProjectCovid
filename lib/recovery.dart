@@ -20,7 +20,7 @@ class _RecoveryState extends State<Recovery> {
           return Center(child: CircularProgressIndicator());
         } else {
           return Scaffold(
-            appBar: AppBar(title:Text("RATE OF RECOVERY FOR LAST 30 DAYS",style: TextStyle(fontSize: 16,color: Colors.black),),
+            appBar: AppBar(title:Text("RECOVERY RATE FOR LAST 30 DAYS",style: TextStyle(fontSize: 16,color: Colors.black),),
             backgroundColor: Colors.red[100],),
               body: GridView.builder(
                   itemCount: store.recovered.length,

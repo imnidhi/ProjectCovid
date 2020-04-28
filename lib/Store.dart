@@ -185,17 +185,17 @@ class Store with ChangeNotifier {
                         Padding(
                           padding: const EdgeInsets.only(left: 12.0),
                           child: Text("Confirmed Cases: $confirmed",
-                              style: TextStyle(fontSize: 16)),
+                              style: TextStyle(fontSize: 18)),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 12.0),
                           child: Text("Recovered Cases: $recovered",
-                              style: TextStyle(fontSize: 16)),
+                              style: TextStyle(fontSize: 18)),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 12.0),
                           child: Text("Deaths: $deaths",
-                              style: TextStyle(fontSize: 16)),
+                              style: TextStyle(fontSize: 18)),
                         ),
                       ],
                     ),
