@@ -21,7 +21,7 @@ class _CasualtiesState extends State<Casualties> {
         } else {
           return Scaffold(
             appBar: AppBar(title:Text("RATE OF DEATHS FOR LAST 30 DAYS",style: TextStyle(fontSize: 16,color: Colors.black),),
-            backgroundColor: Colors.lightBlue[50]),
+            backgroundColor: Colors.red[100]),
               body: GridView.builder(
                   itemCount: store.deaths.length,
                   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(

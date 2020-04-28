@@ -36,15 +36,14 @@ class _PieChartState extends State<PieChart> {
 
   void dataForPieChart() {
     var pieData = [
-
-      new GlobalData("New Confirmed", widget.newConfirmed, Color(0xff9552EA)),
-      new GlobalData("Total Deaths", widget.totalDeaths, Color(0xffF54F52)),
-      new GlobalData("New Deaths", widget.newDeaths, Color(0xffFFA32F)),
-      new GlobalData("New Recovered", widget.newRecovered, Color(0xffF17CB0)),
-            new GlobalData(
-          "Total Recovered", widget.totalRecovered, Color(0xff60BD68)),
+      new GlobalData("New Confirmed", widget.newConfirmed, Color(0xffF1BF98)),
       new GlobalData(
-          "Total Confirmed", widget.totalConfirmed, Color(0xff5DA5DA)),
+          "Total Confirmed", widget.totalConfirmed, Color(0xff7FC6A4)),
+      new GlobalData(
+          "Total Recovered", widget.totalRecovered, Color(0xffA6979C)),
+      new GlobalData("New Recovered", widget.newRecovered, Color(0xffFFFC99)),
+      new GlobalData("New Deaths", widget.newDeaths, Color(0xff333232)),
+      new GlobalData("Total Deaths", widget.totalDeaths, Color(0xffBACBA9)),
     ];
 
     _seriesPieData.add(charts.Series(
@@ -60,35 +59,44 @@ class _PieChartState extends State<PieChart> {
   @override
   Widget build(BuildContext context) {
     return Consumer<Store>(
-        builder: (context, store, child) {
-    return Scaffold(
-        body: charts.PieChart(
+      builder: (context, store, child) {
+        return Scaffold(
+            body: Stack(
+              children: [
+                charts.PieChart(
           _seriesPieData,
           animate: true,
-
           animationDuration: Duration(seconds: 1),
           behaviors: [
-            new charts.DatumLegend(
-              outsideJustification: charts.OutsideJustification.endDrawArea,
-              horizontalFirst: false,
-              desiredMaxRows: 3,
-              cellPadding:
-                  new EdgeInsets.only(top: 4, right: 4, bottom: 4),
-              entryTextStyle: charts.TextStyleSpec(
-                  color: charts.MaterialPalette.black, fontSize: 14),
-            ),
+                new charts.DatumLegend(
+                  outsideJustification: charts.OutsideJustification.endDrawArea,
+                  horizontalFirst: false,
+                  desiredMaxRows: 3,
+                  cellPadding: new EdgeInsets.only(top: 4, right: 4, bottom: 4),
+                  entryTextStyle: charts.TextStyleSpec(
+                      color: charts.MaterialPalette.white, fontSize: 14),
+                ),
           ],
           defaultRenderer: new charts.ArcRendererConfig(
-              arcWidth: 100,
-               startAngle: 6.5/ 5 * 3.14,
-              arcRendererDecorators: [
-                new charts.ArcLabelDecorator(
-                  labelPosition: charts.ArcLabelPosition.auto,
-                  showLeaderLines: true
-                )
-              ]),
-        ));
-        },
-      );
+                  arcWidth: 100,
+                  strokeWidthPx: 0,
+                  startAngle: 7.2/5*3.14,
+                  arcRendererDecorators: [
+                    new charts.ArcLabelDecorator(
+                        labelPosition: charts.ArcLabelPosition.auto,
+                        outsideLabelStyleSpec: charts.TextStyleSpec(
+                          color: charts.Color.white,
+                          fontSize: 12,
+                        ))
+                  ]),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top:50.0),
+          child: Center(child: Image.asset('assets/corona.png')),
+        )
+              ],
+            ));
+      },
+    );
   }
 }
