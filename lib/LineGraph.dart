@@ -45,7 +45,7 @@ class _LineState extends State<Line> {
         return SafeArea(
           child: Scaffold(
             body: Padding(
-              padding: const EdgeInsets.only(top:28.0),
+              padding: const EdgeInsets.only(top: 28.0),
               child: Column(
                 children: <Widget>[
                   Center(
@@ -54,43 +54,56 @@ class _LineState extends State<Line> {
                     style: TextStyle(
                         letterSpacing: 4, fontSize: 30, color: Colors.white),
                   )),
-                  widget.state=="Recovery"?Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                         "Recoveries today: "+ widget.dataPoints.last.noOfRecoveries.toString(),
-                          style: TextStyle( fontSize: 20, color: Colors.white),
+                  widget.state == "Recovery"
+                      ? Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Recoveries today: " +
+                                    widget.dataPoints.last.noOfRecoveries
+                                        .toString(),
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Recoveries 30 days ago: " +
+                                    widget.dataPoints[0].noOfRecoveries
+                                        .toString(),
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Deaths today: " +
+                                    widget.dataPoints.last.noOfDeaths
+                                        .toString(),
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Deaths 30 days ago: " +
+                                    widget.dataPoints[0].noOfDeaths.toString(),
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                       Padding(
-                         padding: const EdgeInsets.all(8.0),
-                         child: Text(
-                         "Recoveries 30 days ago: "+ widget.dataPoints[0].noOfRecoveries.toString(),
-                          style: TextStyle( fontSize: 20, color: Colors.white),
-                      ),
-                       ),
-                    ],
-                  ):Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Deaths today: "+ widget.dataPoints.last.noOfDeaths.toString(),
-                          style: TextStyle( fontSize: 20, color: Colors.white),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Deaths 30 days ago: "+ widget.dataPoints[0].noOfDeaths.toString(),
-                          style: TextStyle( fontSize: 20, color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
                   Padding(
-                    padding: const EdgeInsets.only(top:20.0),
+                    padding: const EdgeInsets.only(top: 20.0),
                     child: Container(
                       height: MediaQuery.of(context).size.height / 2,
                       width: MediaQuery.of(context).size.width * 0.8,
@@ -132,10 +145,14 @@ class _LineState extends State<Line> {
                           new charts.SelectNearest(
                               eventTrigger: charts.SelectionTrigger.tapAndDrag),
                           new charts.ChartTitle('Dates',
+                              titleStyleSpec: charts.TextStyleSpec(
+                                  color: charts.MaterialPalette.white),
                               behaviorPosition: charts.BehaviorPosition.bottom,
                               titleOutsideJustification:
                                   charts.OutsideJustification.middleDrawArea),
                           new charts.ChartTitle('Number of cases',
+                              titleStyleSpec: charts.TextStyleSpec(
+                                  color: charts.MaterialPalette.white),
                               behaviorPosition: charts.BehaviorPosition.start,
                               titleOutsideJustification:
                                   charts.OutsideJustification.middleDrawArea)
