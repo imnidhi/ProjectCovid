@@ -62,12 +62,12 @@ class _PieChartState extends State<PieChart> {
       builder: (context, store, child) {
         return Scaffold(
             body: Stack(
-              children: [
-                charts.PieChart(
-          _seriesPieData,
-          animate: true,
-          animationDuration: Duration(seconds: 1),
-          behaviors: [
+          children: [
+            charts.PieChart(
+              _seriesPieData,
+              animate: true,
+              animationDuration: Duration(seconds: 1),
+              behaviors: [
                 new charts.DatumLegend(
                   outsideJustification: charts.OutsideJustification.endDrawArea,
                   horizontalFirst: false,
@@ -76,11 +76,11 @@ class _PieChartState extends State<PieChart> {
                   entryTextStyle: charts.TextStyleSpec(
                       color: charts.MaterialPalette.white, fontSize: 14),
                 ),
-          ],
-          defaultRenderer: new charts.ArcRendererConfig(
+              ],
+              defaultRenderer: new charts.ArcRendererConfig(
                   arcWidth: 100,
                   strokeWidthPx: 0,
-                  startAngle: 7.2/5*3.14,
+                  startAngle: 7.2 / 5 * 3.14,
                   arcRendererDecorators: [
                     new charts.ArcLabelDecorator(
                         labelPosition: charts.ArcLabelPosition.auto,
@@ -89,13 +89,9 @@ class _PieChartState extends State<PieChart> {
                           fontSize: 12,
                         ))
                   ]),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top:50.0),
-          child: Center(child: Image.asset('assets/corona.png')),
-        )
-              ],
-            ));
+            ),
+          ],
+        ));
       },
     );
   }

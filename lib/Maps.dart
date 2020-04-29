@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:project_covid/CountryData.dart';
 import 'package:provider/provider.dart';
 
 import 'Store.dart';
@@ -20,7 +18,6 @@ class _MapsState extends State<Maps> {
   @override
   void initState() {
     super.initState();
-    Provider.of<Store>(context, listen: false).getAllMarkers(context);
 
     rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;

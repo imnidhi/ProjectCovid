@@ -11,7 +11,7 @@ import 'CountryData.dart';
 
 class Store with ChangeNotifier {
   static DateTime today = new DateTime.now();
-  static DateTime daysAgo = today.subtract(new Duration(days: 15));
+  static DateTime daysAgo = today.subtract(new Duration(days: 30));
   var todaysDate = new DateFormat("yyyy-MM-dd").format(today);
   var thirtydaysago = new DateFormat("yyyy-MM-dd").format(daysAgo);
   Map<String, CountryDataList> countryDataList = {};
