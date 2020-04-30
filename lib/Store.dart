@@ -22,19 +22,19 @@ class Store with ChangeNotifier {
   List countries = [
     {"Country": "Switzerland", "Slug": "switzerland", "ISO2": "CH"},
     {"Country": "India", "Slug": "india", "ISO2": "IN"},
-    {
-      "Country": "United States of America",
-      "Slug": "united-states",
-      "ISO2": "US"
-    },
+    // {
+    //   "Country": "United States of America",
+    //   "Slug": "united-states",
+    //   "ISO2": "US"
+    // },
      {"Country": "Italy", "Slug": "italy", "ISO2": "IT"},
-    // {"Country": "Spain", "Slug": "spain", "ISO2": "ES"},
-    // {"Country": "Germany", "Slug": "germany", "ISO2": "DE"},
-    // {"Country": "China", "Slug": "china", "ISO2": "CN"},
-    // {"Country": "France", "Slug": "france", "ISO2": "FR"},
-    // {"Country": "Iran", "Slug": "iran", "ISO2": "IR"},
-    // {"Country": "United Kingdom", "Slug": "united-kingdom", "ISO2": "GB"},
-    // {"Country": "Turkey", "Slug": "turkey", "ISO2": "TR"},
+    {"Country": "Spain", "Slug": "spain", "ISO2": "ES"},
+    {"Country": "Germany", "Slug": "germany", "ISO2": "DE"},
+    {"Country": "China", "Slug": "china", "ISO2": "CN"},
+    {"Country": "France", "Slug": "france", "ISO2": "FR"},
+    {"Country": "Iran", "Slug": "iran", "ISO2": "IR"},
+    {"Country": "United Kingdom", "Slug": "united-kingdom", "ISO2": "GB"},
+    {"Country": "Turkey", "Slug": "turkey", "ISO2": "TR"},
   ];
 
   // Future<List> getCountries() async {
@@ -79,7 +79,7 @@ class Store with ChangeNotifier {
     for (var country in countries) {
       http.Response response = await http.get(
           "https://api.covid19api.com/live/country/${country['Slug']}/status/confirmed/date/${thirtydaysago}T13:13:30Z");
-      print(response.body);
+      // print(response.body);
       try {
         countryDataForThirtyDays[country['Country']] = response.body;
       } catch (Exception) {
@@ -104,6 +104,7 @@ class Store with ChangeNotifier {
   Future<void> getGlobalDataFromSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     summary = json.decode(prefs.getString('globalData'));
+    print(summary);
     notifyListeners();
   }
 
@@ -155,7 +156,7 @@ class Store with ChangeNotifier {
     for (CountryData data in countryDataList[countryName].countryDataList) {
       dataPoints.add(data.recovered.toDouble());
     }
-    print(dataPoints);
+    // print(dataPoints);
     return dataPoints;
   }
 
@@ -164,7 +165,7 @@ class Store with ChangeNotifier {
     for (CountryData data in countryDataList[countryName].countryDataList) {
       dataPoints.add(data.deaths.toDouble());
     }
-    print(dataPoints);
+    // print(dataPoints);
     return dataPoints;
   }
 
@@ -172,81 +173,52 @@ class Store with ChangeNotifier {
     return Container(child: Text("hiiiiiiiiii"));
   }
 
-  void _settingModalBottomSheet(context, String title, int confirmed,
-      int recovered, int deaths, String code) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return Container(
-            color: Colors.grey[200],
-            height: MediaQuery.of(context).size.height * 0.2,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(title.toUpperCase(),
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2)),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: Text("Confirmed Cases: $confirmed",
-                              style: TextStyle(fontSize: 18)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: Text("Recovered Cases: $recovered",
-                              style: TextStyle(fontSize: 18)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: Text("Deaths: $deaths",
-                              style: TextStyle(fontSize: 18)),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Flags.getMiniFlag(
-                          "$code",
-                          MediaQuery.of(context).size.height * 0.1,
-                          MediaQuery.of(context).size.height * 0.1),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        });
-  }
+  
 
-  void getAllMarkers(BuildContext context) {
-    countryDataList.forEach((key, value) {
-      print(value.countryDataList[0]);
-      allMarkers.add(Marker(
-          markerId: MarkerId(key),
-          draggable: false,
-          position: LatLng(double.parse(value.countryDataList[0].lat),
-              double.parse(value.countryDataList[0].lon)),
-          onTap: () {
-            print(key);
-            _settingModalBottomSheet(
-                context,
-                key,
-                value.countryDataList.last.confirmed,
-                value.countryDataList.last.recovered,
-                value.countryDataList.last.deaths,
-                value.countryDataList.last.countryCode);
-          }));
-    });
-    notifyListeners();
-  }
-}
+//   void getAllMarkers(BuildContext context) {
+//     countryDataList.forEach((key, value) {
+//       print(value.countryDataList[0]);
+//       allMarkers.add(Marker(
+//           markerId: MarkerId(key),
+//           draggable: false,
+//           position: LatLng(double.parse(value.countryDataList[0].lat),
+//               double.parse(value.countryDataList[0].lon)),
+//           onTap: () {
+//             print(key);
+//             _settingModalBottomSheet(
+//                 context,
+//                 key,
+//                 value.countryDataList.last.confirmed,
+//                 value.countryDataList.last.recovered,
+//                 value.countryDataList.last.deaths,
+//                 value.countryDataList.last.countryCode);
+//           }));
+//     });
+//     notifyListeners();
+//   }
+  // void getAllMarkers(BuildContext context) {
+    
+  //     for(var country in summary['Countries']){
+  //       allMarkers.add(Marker(
+  //         markerId: MarkerId(country['CountryCode']),
+  //         draggable: false,
+  //         // position: LatLng(double.parse(value.countryDataList[0].lat),
+  //         //     double.parse(value.countryDataList[0].lon)),
+  //         onTap: () {
+  //           // print(key);
+  //           // _settingModalBottomSheet(
+  //           //     context,
+  //           //     key,
+  //           //     value.countryDataList.last.confirmed,
+  //           //     value.countryDataList.last.recovered,
+  //           //     value.countryDataList.last.deaths,
+  //           //     value.countryDataList.last.countryCode);
+           
+  //     }
+  //         ));
+  //     }
+    
+  //   notifyListeners();
+  // }
+
+ }

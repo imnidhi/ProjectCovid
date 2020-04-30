@@ -16,7 +16,7 @@ class _CasualtiesState extends State<Casualties> {
   Widget build(BuildContext context) {
     return Consumer<Store>(
       builder: (context, store, child) {
-        if (store.countryDataList == null) {
+        if (store.countryDataList.isEmpty) {
           return Center(child: CircularProgressIndicator());
         } else {
           return Scaffold(
