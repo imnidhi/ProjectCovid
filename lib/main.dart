@@ -52,8 +52,6 @@ class _MyHomePageState extends State<MyHomePage> {
         Provider.of<Store>(context, listen: false)
             .getCountryDataFromSharedPref()
             .then((onValue) {
-    //  Provider.of<Store>(context, listen: false).getAllMarkers(context);
-
           Provider.of<Store>(context, listen: false)
               .calculateRecoveryandDeathRate();
         });

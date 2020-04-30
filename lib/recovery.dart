@@ -3,7 +3,6 @@ import 'package:project_covid/CountryData.dart';
 import 'package:project_covid/Store.dart';
 import 'package:provider/provider.dart';
 import 'package:flag/flag.dart';
-import 'Graph.dart';
 import 'LineGraph.dart';
 
 class Recovery extends StatefulWidget {

@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-import 'package:location/location.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';

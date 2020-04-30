@@ -1,6 +1,5 @@
 import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
-import 'package:project_covid/Graph.dart';
 import 'package:provider/provider.dart';
 import 'CountryData.dart';
 import 'LineGraph.dart';
