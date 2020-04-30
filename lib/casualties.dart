@@ -19,8 +19,33 @@ class _CasualtiesState extends State<Casualties> {
           return Center(child: CircularProgressIndicator());
         } else {
           return Scaffold(
-            appBar: AppBar(title:Text("DEATH RATE FOR LAST 30 DAYS",style: TextStyle(fontSize: 16,color: Colors.black),),
-            backgroundColor: Colors.red[100]),
+            appBar: AppBar(
+                title: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "DEATH RATE FOR LAST 30 DAYS",
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        "20 Most Affected Countries",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                  ],
+                ),
+                backgroundColor: Colors.red[100],
+              ),
               body: GridView.builder(
                   itemCount: store.deaths.length,
                   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
@@ -43,7 +68,7 @@ class _CasualtiesState extends State<Casualties> {
                         child: Container(
                           child: Stack(
                             children: <Widget>[
-                              Flags.getFullFlag(
+                              Flags.getMiniFlag(
                                   "${store.deaths[index]['ISO']}", 300, 200),
                               Positioned(
                                 right: 0,

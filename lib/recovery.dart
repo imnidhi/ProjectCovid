@@ -20,9 +20,29 @@ class _RecoveryState extends State<Recovery> {
         } else {
           return Scaffold(
               appBar: AppBar(
-                title: Text(
-                  "RECOVERY RATE FOR LAST 30 DAYS",
-                  style: TextStyle(fontSize: 16, color: Colors.black),
+                title: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "RECOVERY RATE FOR LAST 30 DAYS",
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        "20 Most Affected Countries",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                  ],
                 ),
                 backgroundColor: Colors.red[100],
               ),
@@ -52,12 +72,14 @@ class _RecoveryState extends State<Recovery> {
                                       height: 100,
                                       width: 200,
                                       child: Center(
-                                        child: Text(
-                                            store.recovered[index]['Country'].toString().toUpperCase()),
+                                        child: Text(store.recovered[index]
+                                                ['Country']
+                                            .toString()
+                                            .toUpperCase()),
                                       ),
                                       color: Colors.white,
                                     )
-                                  : Flags.getFullFlag(
+                                  : Flags.getMiniFlag(
                                       "${store.recovered[index]['ISO']}",
                                       300,
                                       200),

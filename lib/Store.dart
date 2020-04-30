@@ -33,6 +33,13 @@ class Store with ChangeNotifier {
     {"Country": "Turkey", "Slug": "turkey", "ISO2": "TR"},
     {"Country": "Japan", "Slug": "japan", "ISO2": "JP"},
     {"Country": "Australia", "Slug": "australia", "ISO2": "AU"},
+    {"Country": "Brazil", "Slug": "brazil", "ISO2": "BR"},
+    {"Country": "Saudi Arabia", "Slug": "saudi-arabia", "ISO2": "SA"},
+    {"Country": "Portugal", "Slug": "portugal", "ISO2": "PT"},
+    {"Country": "Peru", "Slug": "peru", "ISO2": "PE"},
+    {"Country": "Belgium", "Slug": "belgium", "ISO2": "BE"},
+    {"Country": "Canada", "Slug": "canada", "ISO2": "CA"},
+    {"Country": "Russian Federation", "Slug": "russia", "ISO2": "RU"},
   ];
 
   // Future<List> getCountries() async {
@@ -44,14 +51,15 @@ class Store with ChangeNotifier {
   void calculateRecoveryandDeathRate() {
     countryDataList.forEach((key, val) {
       double rateOfRecovery = ((val.countryDataList.last.recovered -
-                  val.countryDataList[val.countryDataList.length - 30]
+                  val.countryDataList[val.countryDataList.length - 31]
                       .recovered) *
               100) /
           val.countryDataList.last.recovered;
       double rateOfDeath = ((val.countryDataList.last.deaths -
-                  val.countryDataList[val.countryDataList.length - 30].deaths) *
+                  val.countryDataList[val.countryDataList.length - 31].deaths) *
               100) /
           val.countryDataList.last.deaths;
+
       var country;
       try {
         country = CountryPickerUtils.getCountryByName(key);
@@ -144,7 +152,6 @@ class Store with ChangeNotifier {
       countryData[country] = CountryDataList.fromJson(jsonDecode(jsonList));
     });
     countryDataList = countryData;
-    // print(countryDataList["United States of America"].countryDataList.last.);
     notifyListeners();
   }
 
@@ -162,7 +169,6 @@ class Store with ChangeNotifier {
     for (CountryData data in countryDataList[countryName].countryDataList) {
       dataPoints.add(data.recovered.toDouble());
     }
-    // print(dataPoints);
     return dataPoints;
   }
 
@@ -171,11 +177,6 @@ class Store with ChangeNotifier {
     for (CountryData data in countryDataList[countryName].countryDataList) {
       dataPoints.add(data.deaths.toDouble());
     }
-    // print(dataPoints);
     return dataPoints;
-  }
-
-  Widget onclick() {
-    return Container(child: Text("hiiiiiiiiii"));
   }
 }
