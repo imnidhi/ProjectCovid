@@ -16,10 +16,12 @@ class _CasualtiesState extends State<Casualties> {
     return Consumer<Store>(
       builder: (context, store, child) {
         if (store.countryDataList.isEmpty) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+              child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent)));
         } else {
           return Scaffold(
-            appBar: AppBar(
+              appBar: AppBar(
                 title: Column(
                   children: [
                     Padding(
@@ -55,15 +57,17 @@ class _CasualtiesState extends State<Casualties> {
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(
                         onTap: () {
-                          List<GlobalData> data = store.getDataForLineGraph(store.deaths[index]['Country']);
+                          List<GlobalData> data = store.getDataForLineGraph(
+                              store.deaths[index]['Country']);
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                 builder: (context) => 
-                                Line("Deaths",store.deaths[index]['Country'],data.sublist(data.length-31,data.length-1)),
-                            )
-                          );
-                        
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Line(
+                                    "Deaths",
+                                    store.deaths[index]['Country'],
+                                    data.sublist(
+                                        data.length - 31, data.length - 1)),
+                              ));
                         },
                         child: Container(
                           child: Stack(
@@ -94,9 +98,10 @@ class _CasualtiesState extends State<Casualties> {
                                 bottom: 0,
                                 child: Text(
                                   "${store.deaths[index]['Country']}",
-                                  style: TextStyle(color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ],

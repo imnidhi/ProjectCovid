@@ -20,8 +20,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-      fontFamily: 'Raleway',
-          primaryColor: Colors.black, scaffoldBackgroundColor: Colors.black),
+          fontFamily: 'Raleway',
+          primaryColor: Colors.black,
+          scaffoldBackgroundColor: Colors.black),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -105,7 +106,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   Consumer<Store>(
                     builder: (context, store, child) {
                       if (store.summary['Global'] == null) {
-                        return Center(child: CircularProgressIndicator());
+                        return Center(
+                            child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.redAccent)));
                       } else {
                         return PieChart(
                             store.summary['Global']['TotalConfirmed'],

@@ -40,18 +40,28 @@ class _MapsState extends State<Maps> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 12.0),
-                            child: Text("Confirmed Cases: $confirmed",
-                                style: TextStyle(fontSize: 16)),
+                            child: Text("CONFIRMED CASES: $confirmed",
+                                style: TextStyle(fontSize: 14)),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 12.0),
-                            child: Text("Recovered Cases: $recovered",
-                                style: TextStyle(fontSize: 16)),
+                            child: Text("RECOVERED CASES: $recovered",
+                                style: TextStyle(fontSize: 14)),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 12.0),
-                            child: Text("Deaths: $deaths",
-                                style: TextStyle(fontSize: 16)),
+                            child: Text("DEATHS: $deaths",
+                                style: TextStyle(fontSize: 14)),
+                          ),
+                           Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Text("Recovery Rate: ${(recovered*100/confirmed).toStringAsFixed(2)}%",
+                                style: TextStyle(fontSize: 14)),
+                          ),
+                           Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Text("Death Rate: ${(deaths*100/confirmed).toStringAsFixed(2)}%",
+                                style: TextStyle(fontSize: 14)),
                           ),
                         ],
                       ),

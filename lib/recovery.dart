@@ -16,7 +16,10 @@ class _RecoveryState extends State<Recovery> {
     return Consumer<Store>(
       builder: (context, store, child) {
         if (store.countryDataList.isEmpty) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+              child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),
+          ));
         } else {
           return Scaffold(
               appBar: AppBar(
@@ -60,8 +63,11 @@ class _RecoveryState extends State<Recovery> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Line("Recovery",
-                                    store.recovered[index]['Country'],  data.sublist(data.length-31,data.length-1)),
+                                builder: (context) => Line(
+                                    "Recovery",
+                                    store.recovered[index]['Country'],
+                                    data.sublist(
+                                        data.length - 31, data.length - 1)),
                               ));
                         },
                         child: Container(
