@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Tab(child: Text("DEATHS")),
                   ],
                 ),
-                title: Text('COVID-19'),
+                title: Text('COVID 19 STATS'),
               ),
               body: TabBarView(
                 physics: NeverScrollableScrollPhysics(),

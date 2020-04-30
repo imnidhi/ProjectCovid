@@ -22,6 +22,19 @@ class Store with ChangeNotifier {
   List countries = [
     {"Country": "Switzerland", "Slug": "switzerland", "ISO2": "CH"},
     {"Country": "India", "Slug": "india", "ISO2": "IN"},
+    {
+      "Country": "United States of America",
+      "Slug": "united-states",
+      "ISO2": "US"
+    },
+     {"Country": "Italy", "Slug": "italy", "ISO2": "IT"},
+    // {"Country": "Spain", "Slug": "spain", "ISO2": "ES"},
+    // {"Country": "Germany", "Slug": "germany", "ISO2": "DE"},
+    // {"Country": "China", "Slug": "china", "ISO2": "CN"},
+    // {"Country": "France", "Slug": "france", "ISO2": "FR"},
+    // {"Country": "Iran", "Slug": "iran", "ISO2": "IR"},
+    // {"Country": "United Kingdom", "Slug": "united-kingdom", "ISO2": "GB"},
+    // {"Country": "Turkey", "Slug": "turkey", "ISO2": "TR"},
   ];
 
   // Future<List> getCountries() async {
@@ -65,7 +78,7 @@ class Store with ChangeNotifier {
     print("QUERY 2");
     for (var country in countries) {
       http.Response response = await http.get(
-          "https://api.covid19api.com/country/${country['Slug']}?from=${thirtydaysago}T00:00:00Z&to=${todaysDate}T00:00:00Z");
+          "https://api.covid19api.com/live/country/${country['Slug']}/status/confirmed/date/${thirtydaysago}T13:13:30Z");
       print(response.body);
       try {
         countryDataForThirtyDays[country['Country']] = response.body;
@@ -124,6 +137,7 @@ class Store with ChangeNotifier {
       countryData[country] = CountryDataList.fromJson(jsonDecode(jsonList));
     });
     countryDataList = countryData;
+    // print(countryDataList["United States of America"].countryDataList.last.);
     notifyListeners();
   }
 
@@ -158,24 +172,24 @@ class Store with ChangeNotifier {
     return Container(child: Text("hiiiiiiiiii"));
   }
 
-  void _settingModalBottomSheet(
-      context, String title, int confirmed, int recovered, int deaths,String code) {
+  void _settingModalBottomSheet(context, String title, int confirmed,
+      int recovered, int deaths, String code) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
           return Container(
             color: Colors.grey[200],
-            height: MediaQuery.of(context).size.height *0.2,
+            height: MediaQuery.of(context).size.height * 0.2,
             child: Column(
               children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(title.toUpperCase(),
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 2)),
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(title.toUpperCase(),
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2)),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -199,11 +213,13 @@ class Store with ChangeNotifier {
                         ),
                       ],
                     ),
-                     Padding(
-                       padding: const EdgeInsets.only(right:8.0),
-                       child: Flags.getMiniFlag(
-                                    "$code", MediaQuery.of(context).size.height *0.1, MediaQuery.of(context).size.height *0.1),
-                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Flags.getMiniFlag(
+                          "$code",
+                          MediaQuery.of(context).size.height * 0.1,
+                          MediaQuery.of(context).size.height * 0.1),
+                    ),
                   ],
                 ),
               ],
@@ -228,8 +244,7 @@ class Store with ChangeNotifier {
                 value.countryDataList.last.confirmed,
                 value.countryDataList.last.recovered,
                 value.countryDataList.last.deaths,
-                value.countryDataList.last.countryCode
-                );
+                value.countryDataList.last.countryCode);
           }));
     });
     notifyListeners();
