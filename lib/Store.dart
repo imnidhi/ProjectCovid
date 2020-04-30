@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flag/flag.dart';
+import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -22,19 +22,17 @@ class Store with ChangeNotifier {
   List countries = [
     {"Country": "Switzerland", "Slug": "switzerland", "ISO2": "CH"},
     {"Country": "India", "Slug": "india", "ISO2": "IN"},
-    // {
-    //   "Country": "United States of America",
-    //   "Slug": "united-states",
-    //   "ISO2": "US"
-    // },
-     {"Country": "Italy", "Slug": "italy", "ISO2": "IT"},
+    {"Country": "United States", "Slug": "united-states", "ISO2": "US"},
+    {"Country": "Italy", "Slug": "italy", "ISO2": "IT"},
     {"Country": "Spain", "Slug": "spain", "ISO2": "ES"},
     {"Country": "Germany", "Slug": "germany", "ISO2": "DE"},
     {"Country": "China", "Slug": "china", "ISO2": "CN"},
     {"Country": "France", "Slug": "france", "ISO2": "FR"},
-    {"Country": "Iran", "Slug": "iran", "ISO2": "IR"},
+    {"Country": "Iran, Islamic Republic of", "Slug": "iran", "ISO2": "IR"},
     {"Country": "United Kingdom", "Slug": "united-kingdom", "ISO2": "GB"},
     {"Country": "Turkey", "Slug": "turkey", "ISO2": "TR"},
+    {"Country": "Japan", "Slug": "japan", "ISO2": "JP"},
+    {"Country": "Australia", "Slug": "australia", "ISO2": "AU"},
   ];
 
   // Future<List> getCountries() async {
@@ -46,21 +44,28 @@ class Store with ChangeNotifier {
   void calculateRecoveryandDeathRate() {
     countryDataList.forEach((key, val) {
       double rateOfRecovery = ((val.countryDataList.last.recovered -
-                  val.countryDataList[0].recovered) *
+                  val.countryDataList[val.countryDataList.length - 30]
+                      .recovered) *
               100) /
           val.countryDataList.last.recovered;
-      double rateOfDeath =
-          ((val.countryDataList.last.deaths - val.countryDataList[0].deaths) *
-                  100) /
-              val.countryDataList.last.deaths;
+      double rateOfDeath = ((val.countryDataList.last.deaths -
+                  val.countryDataList[val.countryDataList.length - 30].deaths) *
+              100) /
+          val.countryDataList.last.deaths;
+      var country;
+      try {
+        country = CountryPickerUtils.getCountryByName(key);
+      } catch (Exception) {
+        print("Country code not available");
+      }
       recovered.add({
         "Country": key,
-        "ISO": val.countryDataList[0].countryCode,
+        "ISO": country != null ? country.isoCode : "",
         "rateOfRecovery": rateOfRecovery.round()
       });
       deaths.add({
         "Country": key,
-        "ISO": val.countryDataList[0].countryCode,
+        "ISO": country != null ? country.isoCode : "",
         "rateOfDeaths": rateOfDeath.round()
       });
     });
@@ -77,9 +82,10 @@ class Store with ChangeNotifier {
     Map<String, String> countryDataForThirtyDays = {};
     print("QUERY 2");
     for (var country in countries) {
-      http.Response response = await http.get(
-          "https://api.covid19api.com/live/country/${country['Slug']}/status/confirmed/date/${thirtydaysago}T13:13:30Z");
-      // print(response.body);
+      http.Response response = await http
+          .get("https://api.covid19api.com/total/country/${country['Slug']}");
+      // "https://api.covid19api.com/live/country/${country['Slug']}/status/confirmed/date/${thirtydaysago}T13:13:30Z");
+      print(response.body);
       try {
         countryDataForThirtyDays[country['Country']] = response.body;
       } catch (Exception) {
@@ -172,4 +178,4 @@ class Store with ChangeNotifier {
   Widget onclick() {
     return Container(child: Text("hiiiiiiiiii"));
   }
- }
+}
