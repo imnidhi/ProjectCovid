@@ -49,18 +49,20 @@ class _LineState extends State<Line> {
               child: Column(
                 children: <Widget>[
                   Center(
-                      child: Text(
-                    widget.countryName.toUpperCase(),
-                    style: TextStyle(
-                        letterSpacing: 4, fontSize: 30, color: Colors.white),
-                  )),
+                    child: Text(
+                      widget.countryName.toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                      letterSpacing: 4, fontSize: 30, color: Colors.white),
+                    ),
+                  ),
                   widget.state == "Recovery"
                       ? Column(
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Recoveries today: " +
+                                "Latest Recoveries: " +
                                     widget.dataPoints.last.noOfRecoveries
                                         .toString(),
                                 style: TextStyle(
@@ -84,7 +86,7 @@ class _LineState extends State<Line> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Deaths today: " +
+                                "Latest Deaths: " +
                                     widget.dataPoints.last.noOfDeaths
                                         .toString(),
                                 style: TextStyle(

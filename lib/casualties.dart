@@ -60,7 +60,7 @@ class _CasualtiesState extends State<Casualties> {
                             context,
                             MaterialPageRoute(
                                  builder: (context) => 
-                                Line("Deaths",store.deaths[index]['Country'],data),
+                                Line("Deaths",store.deaths[index]['Country'],data.sublist(data.length-31,data.length-1)),
                             )
                           );
                         

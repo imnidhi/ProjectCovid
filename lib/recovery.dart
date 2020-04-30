@@ -61,7 +61,7 @@ class _RecoveryState extends State<Recovery> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => Line("Recovery",
-                                    store.recovered[index]['Country'], data),
+                                    store.recovered[index]['Country'],  data.sublist(data.length-31,data.length-1)),
                               ));
                         },
                         child: Container(
