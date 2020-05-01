@@ -161,7 +161,7 @@ class _MapsState extends State<Maps> {
                       'Select a country by clicking on it',
                       style: TextStyle(fontSize: 20,fontFamily: 'Raleway'),
                     ),
-                    duration: Duration(seconds: 5),
+                    duration: Duration(seconds: 4),
                     backgroundColor: Colors.red,
                   );
                   Scaffold.of(context).showSnackBar(snackBar);
