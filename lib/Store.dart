@@ -124,7 +124,7 @@ class Store with ChangeNotifier {
   Future<dynamic> checkifGlobalDataExists() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString('globalData') == null ||
-        DateTime.now().difference(DateTime.parse(prefs.getString('date'))).inHours==4) {
+        DateTime.now().difference(DateTime.parse(prefs.getString('date'))).inHours>=4) {
       getGlobalSummary().then((onValue) {
         getGlobalDataFromSharedPrefs();
       });

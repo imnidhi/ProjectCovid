@@ -21,7 +21,6 @@ class _MapsState extends State<Maps> {
           return FittedBox(
                       child: Container(
               color: Colors.grey[200],
-              // height: MediaQuery.of(context).size.height * 0.2,
               child: Column(
                 children: [
                   Padding(
@@ -32,6 +31,7 @@ class _MapsState extends State<Maps> {
                             fontWeight: FontWeight.bold,
                             letterSpacing: 2)),
                   ),
+                   
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -40,28 +40,28 @@ class _MapsState extends State<Maps> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 12.0),
-                            child: Text("CONFIRMED CASES: $confirmed",
-                                style: TextStyle(fontSize: 14)),
+                            child: Text("Confirmed: $confirmed",
+                                style: TextStyle(fontSize: 14,fontFamily: 'roboto')),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 12.0),
-                            child: Text("RECOVERED CASES: $recovered",
-                                style: TextStyle(fontSize: 14)),
+                            child: Text("Recovered: $recovered",
+                                style: TextStyle(fontSize: 14,fontFamily: 'roboto')),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 12.0),
-                            child: Text("DEATHS: $deaths",
-                                style: TextStyle(fontSize: 14)),
+                            child: Text("Deaths: $deaths",
+                                style: TextStyle(fontSize: 14,fontFamily: 'roboto')),
                           ),
                            Padding(
                             padding: const EdgeInsets.only(left: 12.0),
                             child: Text("Recovery Rate: ${(recovered*100/confirmed).toStringAsFixed(2)}%",
-                                style: TextStyle(fontSize: 14)),
+                                style: TextStyle(fontSize: 12,fontFamily: 'roboto')),
                           ),
                            Padding(
                             padding: const EdgeInsets.only(left: 12.0),
                             child: Text("Death Rate: ${(deaths*100/confirmed).toStringAsFixed(2)}%",
-                                style: TextStyle(fontSize: 14)),
+                                style: TextStyle(fontSize: 12,fontFamily: 'roboto')),
                           ),
                         ],
                       ),

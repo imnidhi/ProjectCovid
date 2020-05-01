@@ -36,7 +36,7 @@ class _PieChartState extends State<PieChart> {
 
   void dataForPieChart() {
     var pieData = [
-      new GlobalData("New Confirmed", widget.newConfirmed, Color(0xffF1BF98)),
+       new GlobalData("New Confirmed", widget.newConfirmed, Color(0xffF1BF98)),
       new GlobalData(
           "Total Confirmed", widget.totalConfirmed, Color(0xff7FC6A4)),
       new GlobalData(

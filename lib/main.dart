@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:project_covid/Maps.dart';
 import 'package:provider/provider.dart';
@@ -38,15 +40,23 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var summary = {};
+   Timer timer;
   @override
   void initState() {
     super.initState();
-    setState(() {
-      
     checkIfDataExists();
-    Provider.of<Store>(context, listen: false).checkifGlobalDataExists();
-    });
+    Provider.of<Store>(context, listen: false).checkifGlobalDataExists(); 
+    timer = Timer.periodic(Duration(hours: 4), (Timer t) {
+      checkIfDataExists();
+    }); 
+    timer = Timer.periodic(Duration(hours: 4), (Timer t) {
+    Provider.of<Store>(context, listen: false).checkifGlobalDataExists(); 
+    }); 
   }
+  @override
+void dispose() {
+  super.dispose();
+}
 
   void checkIfDataExists() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -80,15 +90,15 @@ class _MyHomePageState extends State<MyHomePage> {
             length: 4,
             child: Scaffold(
               appBar: AppBar(
-                leading: GestureDetector(
-                  onTap: () {
-                    Provider.of<Store>(context, listen: false)
-                        .clearDataInSharedPref();
-                  },
-                  child: Icon(
-                    Icons.clear,
-                  ),
-                ),
+                // leading: GestureDetector(
+                //   onTap: () {
+                //     Provider.of<Store>(context, listen: false)
+                //         .clearDataInSharedPref();
+                //   },
+                //   child: Icon(
+                //     Icons.clear,
+                //   ),
+                // ),
                 bottom: TabBar(
                   indicatorColor: Colors.white,
                   unselectedLabelColor: Colors.redAccent,
