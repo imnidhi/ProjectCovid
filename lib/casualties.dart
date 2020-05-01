@@ -30,7 +30,7 @@ class _CasualtiesState extends State<Casualties> {
                         alignment: Alignment.topLeft,
                         child: FittedBox(
                                                   child: Text(
-                            "CHANGE IN DEATH RATE OVER LAST 30 DAYS",
+                            "% CHANGE IN DEATH RATE OVER LAST 30 DAYS",
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),

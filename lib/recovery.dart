@@ -31,7 +31,7 @@ class _RecoveryState extends State<Recovery> {
                         alignment: Alignment.topLeft,
                         child: FittedBox(
                           child: Text(
-                            "CHANGE IN RECOVERY RATE OVER LAST 30 DAYS",
+                            "% CHANGE IN RECOVERY RATE OVER LAST 30 DAYS",
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),
