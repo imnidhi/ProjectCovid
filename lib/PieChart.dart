@@ -36,13 +36,14 @@ class _PieChartState extends State<PieChart> {
 
   void dataForPieChart() {
     var pieData = [
-       new GlobalData("New Confirmed", widget.newConfirmed, Color(0xffF1BF98)),
+       new GlobalData("New Recovered", widget.newRecovered, Color(0xffFFFC99)),
+      
       new GlobalData(
           "Total Confirmed", widget.totalConfirmed, Color(0xff7FC6A4)),
       new GlobalData(
           "Total Recovered", widget.totalRecovered, Color(0xffA6979C)),
-      new GlobalData("New Recovered", widget.newRecovered, Color(0xffFFFC99)),
-      new GlobalData("New Deaths", widget.newDeaths, Color(0xff333232)),
+      new GlobalData("New Confirmed", widget.newConfirmed, Color(0xffF1BF98)),
+      // new GlobalData("New Deaths", widget.newDeaths, Color(0xff333232)),
       new GlobalData("Total Deaths", widget.totalDeaths, Color(0xffBACBA9)),
     ];
 
@@ -80,7 +81,7 @@ class _PieChartState extends State<PieChart> {
               defaultRenderer: new charts.ArcRendererConfig(
                   arcWidth: 100,
                   strokeWidthPx: 0,
-                  startAngle: 7.2 / 5 * 3.14,
+                  startAngle:8 / 5 * 3.14,
                   arcRendererDecorators: [
                     new charts.ArcLabelDecorator(
                         labelPosition: charts.ArcLabelPosition.auto,
