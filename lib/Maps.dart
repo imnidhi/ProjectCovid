@@ -31,54 +31,57 @@ class _MapsState extends State<Maps> {
                             fontWeight: FontWeight.bold,
                             letterSpacing: 2)),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12.0),
-                            child: Text("Confirmed: $confirmed",
-                                style: TextStyle(
-                                    fontSize: 14, fontFamily: 'roboto')),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12.0),
-                            child: Text("Recovered: $recovered",
-                                style: TextStyle(
-                                    fontSize: 14, fontFamily: 'roboto')),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12.0),
-                            child: Text("Deaths: $deaths",
-                                style: TextStyle(
-                                    fontSize: 14, fontFamily: 'roboto')),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12.0),
-                            child: Text(
-                                "Recovery Rate: ${(recovered * 100 / confirmed).isNaN ? 0 : (recovered * 100 / confirmed).toStringAsFixed(2)}%",
-                                style: TextStyle(
-                                    fontSize: 12, fontFamily: 'roboto')),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12.0),
-                            child: Text(
-                                "Death Rate: ${(deaths * 100 / confirmed).isNaN ? 0 : (deaths * 100 / confirmed).toStringAsFixed(2)}%",
-                                style: TextStyle(
-                                    fontSize: 12, fontFamily: 'roboto')),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Flags.getMiniFlag(
-                            "$code",
-                            MediaQuery.of(context).size.height * 0.1,
-                            MediaQuery.of(context).size.height * 0.1),
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(bottom:20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12.0),
+                              child: Text("Confirmed: $confirmed",
+                                  style: TextStyle(
+                                      fontSize: 14, fontFamily: 'roboto')),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12.0),
+                              child: Text("Recovered: $recovered",
+                                  style: TextStyle(
+                                      fontSize: 14, fontFamily: 'roboto')),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12.0),
+                              child: Text("Deaths: $deaths",
+                                  style: TextStyle(
+                                      fontSize: 14, fontFamily: 'roboto')),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12.0),
+                              child: Text(
+                                  "Recovery Rate: ${(recovered * 100 / confirmed).isNaN ? 0 : (recovered * 100 / confirmed).toStringAsFixed(2)}%",
+                                  style: TextStyle(
+                                      fontSize: 12, fontFamily: 'roboto')),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12.0),
+                              child: Text(
+                                  "Death Rate: ${(deaths * 100 / confirmed).isNaN ? 0 : (deaths * 100 / confirmed).toStringAsFixed(2)}%",
+                                  style: TextStyle(
+                                      fontSize: 12, fontFamily: 'roboto')),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Flags.getMiniFlag(
+                              "$code",
+                              MediaQuery.of(context).size.height * 0.1,
+                              MediaQuery.of(context).size.height * 0.1),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
