@@ -66,7 +66,7 @@ class _CasualtiesState extends State<Casualties> {
                                     "Deaths",
                                     store.deaths[index]['Country'],
                                     data.sublist(
-                                        data.length - 31, data.length - 1)),
+                                        data.length - 30, data.length)),
                               ));
                         },
                         child: Container(

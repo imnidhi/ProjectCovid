@@ -47,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void checkIfDataExists(String date) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    
     if (prefs.getString('Country') == null || date != prefs.getString('date')) {
       Provider.of<Store>(context, listen: false).getCountryData().then((v) {
         print("Data Fetched");

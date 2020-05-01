@@ -60,14 +60,16 @@ class _RecoveryState extends State<Recovery> {
                         onTap: () {
                           List<GlobalData> data = store.getDataForLineGraph(
                               store.recovered[index]['Country']);
+                              print("AAAAAAAAAAAAAAAAAAA");
+                              print(data);
+                                    print(data.sublist(data.length - 30, data.length));
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => Line(
                                     "Recovery",
                                     store.recovered[index]['Country'],
-                                    data.sublist(
-                                        data.length - 31, data.length - 1)),
+                                    data.sublist(data.length-30,data.length))
                               ));
                         },
                         child: Container(

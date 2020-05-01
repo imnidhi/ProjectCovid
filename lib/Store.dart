@@ -51,12 +51,12 @@ class Store with ChangeNotifier {
   void calculateRecoveryandDeathRate() {
     countryDataList.forEach((key, val) {
       double rateOfRecovery = ((val.countryDataList.last.recovered -
-                  val.countryDataList[val.countryDataList.length - 31]
+                  val.countryDataList[val.countryDataList.length - 30]
                       .recovered) *
               100) /
           val.countryDataList.last.recovered;
       double rateOfDeath = ((val.countryDataList.last.deaths -
-                  val.countryDataList[val.countryDataList.length - 31].deaths) *
+                  val.countryDataList[val.countryDataList.length - 3].deaths) *
               100) /
           val.countryDataList.last.deaths;
 
@@ -92,7 +92,6 @@ class Store with ChangeNotifier {
     for (var country in countries) {
       http.Response response = await http
           .get("https://api.covid19api.com/total/country/${country['Slug']}");
-      // "https://api.covid19api.com/live/country/${country['Slug']}/status/confirmed/date/${thirtydaysago}T13:13:30Z");
       print(response.body);
       try {
         countryDataForThirtyDays[country['Country']] = response.body;
