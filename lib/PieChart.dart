@@ -66,7 +66,7 @@ class _PieChartState extends State<PieChart> {
             charts.PieChart(
               _seriesPieData,
               animate: true,
-              animationDuration: Duration(seconds: 1),
+              animationDuration: Duration(milliseconds: 500),
               behaviors: [
                 new charts.DatumLegend(
                   outsideJustification: charts.OutsideJustification.endDrawArea,

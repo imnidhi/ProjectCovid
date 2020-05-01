@@ -55,12 +55,12 @@ class _MapsState extends State<Maps> {
                           ),
                            Padding(
                             padding: const EdgeInsets.only(left: 12.0),
-                            child: Text("Recovery Rate: ${(recovered*100/confirmed).toStringAsFixed(2)}%",
+                            child: Text("Recovery Rate: ${(recovered*100/confirmed).isNaN?0:(recovered*100/confirmed).toStringAsFixed(2)}%",
                                 style: TextStyle(fontSize: 12,fontFamily: 'roboto')),
                           ),
                            Padding(
                             padding: const EdgeInsets.only(left: 12.0),
-                            child: Text("Death Rate: ${(deaths*100/confirmed).toStringAsFixed(2)}%",
+                            child: Text("Death Rate: ${(deaths*100/confirmed).isNaN?0:(deaths*100/confirmed).toStringAsFixed(2)}%",
                                 style: TextStyle(fontSize: 12,fontFamily: 'roboto')),
                           ),
                         ],

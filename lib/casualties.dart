@@ -28,9 +28,11 @@ class _CasualtiesState extends State<Casualties> {
                       padding: const EdgeInsets.all(2.0),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: Text(
-                          "DEATH RATE FOR LAST 30 DAYS",
-                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        child: FittedBox(
+                                                  child: Text(
+                            "CHANGE IN DEATH RATE OVER LAST 30 DAYS",
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
                         ),
                       ),
                     ),
@@ -79,7 +81,7 @@ class _CasualtiesState extends State<Casualties> {
                                 top: 0,
                                 child: SizedBox(
                                   height: 40,
-                                  width: 40,
+                                  width: 60,
                                   child: new ClipOval(
                                     child: Material(
                                         color: Colors.black,

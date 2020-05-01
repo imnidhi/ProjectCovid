@@ -54,11 +54,12 @@ class Store with ChangeNotifier {
                   val.countryDataList[val.countryDataList.length - 30]
                       .recovered) *
               100) /
-          val.countryDataList.last.recovered;
+          val.countryDataList[val.countryDataList.length - 30]
+                      .recovered;
       double rateOfDeath = ((val.countryDataList.last.deaths -
-                  val.countryDataList[val.countryDataList.length - 3].deaths) *
+                  val.countryDataList[val.countryDataList.length - 30].deaths) *
               100) /
-          val.countryDataList.last.deaths;
+          val.countryDataList[val.countryDataList.length - 30].deaths;
 
       var country;
       try {

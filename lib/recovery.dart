@@ -29,9 +29,11 @@ class _RecoveryState extends State<Recovery> {
                       padding: const EdgeInsets.all(2.0),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: Text(
-                          "RECOVERY RATE FOR LAST 30 DAYS",
-                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        child: FittedBox(
+                          child: Text(
+                            "CHANGE IN RECOVERY RATE OVER LAST 30 DAYS",
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
                         ),
                       ),
                     ),
@@ -60,17 +62,17 @@ class _RecoveryState extends State<Recovery> {
                         onTap: () {
                           List<GlobalData> data = store.getDataForLineGraph(
                               store.recovered[index]['Country']);
-                              print("AAAAAAAAAAAAAAAAAAA");
-                              print(data);
-                                    print(data.sublist(data.length - 30, data.length));
+                          print("AAAAAAAAAAAAAAAAAAA");
+                          print(data);
+                          print(data.sublist(data.length - 30, data.length));
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Line(
-                                    "Recovery",
-                                    store.recovered[index]['Country'],
-                                    data.sublist(data.length-30,data.length))
-                              ));
+                                  builder: (context) => Line(
+                                      "Recovery",
+                                      store.recovered[index]['Country'],
+                                      data.sublist(
+                                          data.length - 30, data.length))));
                         },
                         child: Container(
                           child: Stack(
@@ -96,7 +98,7 @@ class _RecoveryState extends State<Recovery> {
                                 top: 0,
                                 child: SizedBox(
                                   height: 40,
-                                  width: 40,
+                                  width: 60,
                                   child: new ClipOval(
                                     child: Material(
                                         color: Colors.black,
