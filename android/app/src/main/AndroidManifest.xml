@@ -8,7 +8,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="project_covid"
+        android:label="Covid-19 Stats"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyAZ6UYL77zJjL3W0rnItaOqBnr1OiGGoPs"/>
