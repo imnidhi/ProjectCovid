@@ -111,20 +111,20 @@ class Store with ChangeNotifier {
   void setGlobalDataToSharedPrefs(String globalData) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('globalData', globalData);
-    prefs.setString('date', DateFormat("yyyy-MM-dd").format(DateTime.now()));
+    prefs.setString('date',DateTime.now().toString());
   }
 
   Future<void> getGlobalDataFromSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     summary = json.decode(prefs.getString('globalData'));
-    print(summary);
+    // print(summary);
     notifyListeners();
   }
 
   Future<dynamic> checkifGlobalDataExists() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString('globalData') == null ||
-        prefs.getString('date') != todaysDate) {
+        DateTime.now().difference(DateTime.parse(prefs.getString('date'))).inHours==4) {
       getGlobalSummary().then((onValue) {
         getGlobalDataFromSharedPrefs();
       });
